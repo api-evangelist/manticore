@@ -1,0 +1,59 @@
+name: Manticore Search Plans and Pricing
+description: Manticore Search is open-source and free to self-host. Commercial support plans are available for organizations needing SLAs and dedicated assistance.
+url: https://manticoresearch.com/services/
+plans:
+  - name: Community
+    description: Free open-source self-hosted deployment with community support via forum, Slack, Telegram, and GitHub.
+    price: 0
+    currency: USD
+    period: month
+    features:
+      - Open-source self-hosted
+      - Public forum support
+      - Slack community
+      - Telegram channels
+      - GitHub issue support
+      - Complimentary configuration review
+    limits: []
+
+  - name: Standard
+    description: Commercial support plan for organizations requiring SLA guarantees and dedicated technical account management.
+    price: contact
+    currency: USD
+    period: month
+    features:
+      - SLA guarantees
+      - Dedicated Technical Account Manager
+      - Installation and configuration consulting
+      - Migration consulting
+      - Performance optimization guidance
+      - Expedited bug fixes
+      - Knowledge base access
+    limits: []
+
+  - name: Enterprise
+    description: Premium support plan for organizations requiring daily engagement, custom feature development, and private branch maintenance.
+    price: contact
+    currency: USD
+    period: month
+    features:
+      - All Standard plan benefits
+      - Private dedicated chat
+      - Custom feature development
+      - Private branch maintenance
+      - Daily engagement support
+    limits: []
+
+managed:
+  - provider: Elestio
+    url: https://elest.io/open-source/manticoresearch
+    starting_price: 11
+    currency: USD
+    period: month
+    features:
+      - Automated backups
+      - SSL
+      - Automated updates
+      - 24/7 monitoring
+      - 9 cloud providers supported
+      - 100+ regions available

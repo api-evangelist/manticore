@@ -1,0 +1,66 @@
+name: Manticore Search FinOps
+description: Financial operations guidance for Manticore Search deployments. As an open-source self-hosted solution, costs are driven by infrastructure rather than API call pricing.
+url: https://manticoresearch.com/services/
+license: GPLv3
+open_source: true
+
+cost_model:
+  type: infrastructure
+  description: Manticore Search itself is free under GPLv3. Total cost of ownership is determined by hosting infrastructure, storage, compute, and optional commercial support contracts.
+
+infrastructure_costs:
+  - category: Compute
+    description: Manticore Search can run on minimal resources. Baseline is 1 core and 1GB RAM, though production workloads typically require more depending on dataset size and query volume.
+    minimum_viable: "1 vCPU, 1GB RAM"
+    recommended_production: "4+ vCPU, 8GB+ RAM"
+
+  - category: Storage
+    description: Columnar and row-wise storage options. Storage costs scale with index size and number of documents.
+
+  - category: Network
+    description: Data transfer costs for replication across nodes or regions when using multi-master replication.
+
+managed_service_costs:
+  - provider: Elestio
+    url: https://elest.io/open-source/manticoresearch
+    starting_price: 11
+    currency: USD
+    period: month
+    includes:
+      - Managed infrastructure
+      - Automated backups
+      - SSL certificates
+      - Automated updates
+      - 24/7 monitoring
+      - Multi-cloud and multi-region support
+
+support_costs:
+  - tier: Community
+    cost: 0
+    currency: USD
+    period: month
+    description: Free community support via forum, Slack, Telegram, and GitHub.
+
+  - tier: Standard
+    cost: contact
+    currency: USD
+    period: month
+    description: Commercial SLA-backed support with dedicated Technical Account Manager. Contact sales for pricing.
+
+  - tier: Enterprise
+    cost: contact
+    currency: USD
+    period: month
+    description: Full-service enterprise support with custom feature development and private branch maintenance. Contact sales for pricing.
+
+cost_optimization_tips:
+  - Use columnar storage for analytical workloads to reduce memory usage.
+  - Leverage secondary indexes (PGM-index) to speed up queries and reduce CPU costs.
+  - Use real-time indexes for frequently updated data and plain indexes for static datasets.
+  - Enable replication only when high availability is required to control infrastructure costs.
+  - Start with minimal resources and scale based on actual query volume and latency requirements.
+
+contact:
+  email: support@manticoresearch.com
+  enterprise: info@manticoresearch.com
+  enterprise_url: https://manticoresearch.com/contact-enterprise/

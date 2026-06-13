@@ -1,0 +1,27 @@
+name: Manticore Search Rate Limits
+description: Manticore Search is a self-hosted open-source search engine. There are no externally imposed API rate limits by a SaaS provider. Performance and throughput are determined by the hardware and configuration of the deployment.
+url: https://manual.manticoresearch.com/
+limits:
+  - name: No Enforced Rate Limits
+    description: As a self-hosted solution, Manticore Search does not impose API rate limits. Throughput depends on server resources, index size, query complexity, and hardware configuration.
+    type: none
+    enforced: false
+
+notes:
+  - Manticore Search runs on minimal resources (1 core, 1GB RAM) for small deployments.
+  - Performance benchmarks show up to 2.83x faster than Elasticsearch for big data workloads.
+  - Up to 10.09x faster than Elasticsearch for log analytics workloads.
+  - Up to 182x faster than MySQL for small dataset full-text search.
+  - Real-time inserts and multi-master replication are supported.
+  - Columnar storage and secondary indexes (PGM-index) can be used to optimize query performance.
+  - For managed deployments via third-party providers (e.g., Elestio), check that provider's resource limits.
+
+default_port: 9308
+protocols:
+  - name: HTTP REST API
+    port: 9308
+  - name: MySQL Protocol
+    port: 9306
+  - name: SQL over HTTP
+    port: 9308
+    path: /sql
