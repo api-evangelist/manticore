@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/aggCompositeSource.json",
+  "title": "aggCompositeSource",
+  "description": "Object containing terms used for composite aggregation.",
+  "type": "object",
+  "required": [
+    "terms"
+  ],
+  "properties": {
+    "terms": {
+      "$ref": "#/components/schemas/aggCompositeTerm"
+    }
+  },
+  "additionalProperties": false
+}

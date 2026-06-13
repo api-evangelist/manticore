@@ -1,0 +1,7 @@
+{
+  "operationId": "percolate",
+  "method": "POST",
+  "path": "/pq/{table}/search",
+  "summary": "Perform reverse search on a percolate table",
+  "description": "Performs a percolate search.\nThis method must be used only on percolate tables.\nExpects two parameters: the table name and an object with array of documents to be tested.\nAn example of the documents object: ```\n  {\n    \"query\" {\n      \"percolate\": {\n        \"document\": {\n          \"content\":\"sample content\"\n        }\n      }\n    }\n  }\n```\nResponds with an object with matched stored queries:  ```\n  {\n    'timed_out':false,\n    'hits': {\n      'total':2,\n      'max_score':1,\n      'hits': [\n        {\n          'table':'idx_pq_1',\n          '_type':'doc',\n          '_id':'2',\n          '_score':'1',\n          '_source': {\n            'query': {\n              'match':{'title':'some'}\n            }\n          }\n        },\n        {\n          'table':'idx_pq_1',\n          '_type':'doc',\n          '_id':'5',\n          '_score':'1',\n          '_source': {\n            'query': {\n              'ql':'some | none'\n            }\n          }\n        }\n      ]\n    }\n  }\n```\n"
+}

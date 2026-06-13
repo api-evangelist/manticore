@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/join.json",
+  "title": "join",
+  "description": "JSON Schema for Manticore Search join",
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "on",
+        "table"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "inner",
+            "left"
+          ],
+          "description": "Type of the join operation"
+        },
+        "true": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/joinOn"
+          },
+          "description": "List of objects defining joined tables"
+        },
+        "query": {
+          "$ref": "#/components/schemas/fulltextFilter"
+        },
+        "table": {
+          "type": "string",
+          "description": "Basic table of the join operation"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Object representing the join operation between two tables"
+    }
+  ]
+}

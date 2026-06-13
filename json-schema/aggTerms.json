@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/aggTerms.json",
+  "title": "aggTerms",
+  "description": "Object containing term fields to aggregate on",
+  "type": "object",
+  "required": [
+    "field"
+  ],
+  "properties": {
+    "field": {
+      "type": "string",
+      "description": "Name of attribute to aggregate by",
+      "example": "field1"
+    },
+    "size": {
+      "type": "integer",
+      "description": "Maximum number of buckets in the result",
+      "example": 1000
+    }
+  },
+  "additionalProperties": false
+}

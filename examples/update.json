@@ -1,0 +1,8 @@
+{
+  "operationId": "update",
+  "method": "POST",
+  "path": "/update",
+  "summary": "Update a document in a table",
+  "description": "Update one or several documents.\nThe update can be made by passing the id or by using a match query in case multiple documents can be updated.  For example update a document using document id:\n\n  ```\n  {'table':'movies','doc':{'rating':9.49},'id':100}\n  ```\n\nAnd update by using a match query:\n\n  ```\n  {\n    'table':'movies',\n    'doc':{'rating':9.49},\n    'query':\n    {\n      'bool':\n      {\n        'must':\n        [\n          {'query_string':'new movie'}\n        ]\n      }\n    }\n  }\n  ``` \n\nThe match query has same syntax as for searching.\nResponds with an object that tells how many documents where updated in format: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n",
+  "requestExample": "test"
+}

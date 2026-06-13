@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/boolFilter.json",
+  "title": "boolFilter",
+  "description": "JSON Schema for Manticore Search boolFilter",
+  "type": "object",
+  "properties": {
+    "must": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/queryFilter"
+      },
+      "description": "Query clauses that must match for the document to be included"
+    },
+    "must_not": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/queryFilterAlias1"
+      },
+      "description": "Query clauses that must not match for the document to be included"
+    },
+    "should": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/queryFilterAlias2"
+      },
+      "description": "Query clauses that should be matched, but are not required"
+    }
+  },
+  "additionalProperties": false
+}

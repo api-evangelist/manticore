@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/hitsHits.json",
+  "title": "hitsHits",
+  "description": "Search hit representing a matched document",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "type": "integer",
+      "format": "uint64",
+      "description": "The ID of the matched document"
+    },
+    "_score": {
+      "type": "integer",
+      "description": "The score of the matched document"
+    },
+    "_source": {
+      "type": "object",
+      "description": "The source data of the matched document"
+    },
+    "_knn_dist": {
+      "type": "number",
+      "description": "The knn distance of the matched document returned for knn queries"
+    },
+    "highlight": {
+      "type": "object",
+      "description": "The highlighting-related data of the matched document"
+    },
+    "table": {
+      "type": "string",
+      "description": "The table name of the matched document returned for percolate queries"
+    },
+    "_type:": {
+      "type": "string",
+      "description": "The type of the matched document returned for percolate queries"
+    },
+    "fields": {
+      "type": "object",
+      "description": "The percolate-related fields of the matched document returned for percolate queries"
+    }
+  },
+  "additionalProperties": true
+}

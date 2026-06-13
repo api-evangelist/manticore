@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/searchResponse.json",
+  "title": "searchResponse",
+  "description": "Response object containing the results of a search request",
+  "type": "object",
+  "properties": {
+    "took": {
+      "type": "integer",
+      "description": "Time taken to execute the search"
+    },
+    "timed_out": {
+      "type": "boolean",
+      "description": "Indicates whether the search operation timed out"
+    },
+    "aggregations": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Aggregated search results grouped by the specified criteria"
+    },
+    "hits": {
+      "type": "object",
+      "properties": {
+        "max_score": {
+          "type": "integer",
+          "description": "Maximum score among the matched documents"
+        },
+        "total": {
+          "type": "integer",
+          "description": "Total number of matched documents"
+        },
+        "total_relation": {
+          "type": "string",
+          "description": "Indicates whether the total number of hits is accurate or an estimate"
+        },
+        "hits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/hitsHits"
+          },
+          "description": "Array of hit objects, each representing a matched document"
+        }
+      },
+      "description": "Object containing the search hits, which represent the documents that matched the query.",
+      "example": {
+        "total": 2,
+        "hits": [
+          {
+            "_id": 1,
+            "_score": 1,
+            "_source": {
+              "gid": 11
+            }
+          },
+          {
+            "_id": 2,
+            "_score": 1,
+            "_source": {
+              "gid": 20
+            }
+          }
+        ]
+      }
+    },
+    "profile": {
+      "type": "object",
+      "description": "Profile information about the search execution, if profiling is enabled"
+    },
+    "scroll": {
+      "type": "string",
+      "description": "Scroll token to be used fo pagination"
+    },
+    "warning": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Warnings encountered during the search operation"
+    }
+  }
+}

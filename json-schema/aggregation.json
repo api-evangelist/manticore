@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/aggregation.json",
+  "title": "aggregation",
+  "description": "JSON Schema for Manticore Search aggregation",
+  "allOf": [
+    {
+      "type": "object",
+      "description": "Object used for grouping search results",
+      "properties": {
+        "terms": {
+          "$ref": "#/components/schemas/aggTerms"
+        },
+        "sort": {
+          "type": "array",
+          "items": {
+            "type": {}
+          }
+        },
+        "composite": {
+          "$ref": "#/components/schemas/aggComposite"
+        },
+        "histogram": {
+          "$ref": "#/components/schemas/aggHistogram"
+        }
+      }
+    }
+  ]
+}

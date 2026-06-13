@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/knn.json",
+  "title": "knn",
+  "description": "Object representing a k-nearest neighbor search query",
+  "type": "object",
+  "required": [
+    "field"
+  ],
+  "properties": {
+    "field": {
+      "type": "string",
+      "description": "Field to perform the k-nearest neighbor search on"
+    },
+    "k": {
+      "type": "integer",
+      "deprecated": true,
+      "description": "Deprecated. Use the top-level `limit` parameter instead."
+    },
+    "query": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      ]
+    },
+    "query_vector": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "description": "The vector used as input for the KNN search"
+    },
+    "doc_id": {
+      "type": "integer",
+      "format": "uint64",
+      "description": "The docuemnt ID used as input for the KNN search"
+    },
+    "ef": {
+      "type": "integer",
+      "description": "Optional parameter controlling the accuracy of the search"
+    },
+    "filter": {
+      "$ref": "#/components/schemas/queryFilter"
+    }
+  }
+}

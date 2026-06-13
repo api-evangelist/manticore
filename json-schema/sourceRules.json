@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/sourceRules.json",
+  "title": "sourceRules",
+  "description": "Defines which fields to include or exclude in the response for a search query",
+  "type": "object",
+  "properties": {
+    "includes": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "description": "List of fields to include in the response"
+    },
+    "excludes": {
+      "type": "array",
+      "default": [
+        ""
+      ],
+      "items": {
+        "type": "string"
+      },
+      "description": "List of fields to exclude from the response"
+    }
+  },
+  "additionalProperties": false,
+  "minProperties": 1,
+  "example": {
+    "includes": [
+      "attr1",
+      "attri*"
+    ],
+    "excludes": [
+      "desc*"
+    ]
+  }
+}

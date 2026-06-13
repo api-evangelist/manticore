@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/replaceDocumentRequest.json",
+  "title": "replaceDocumentRequest",
+  "description": "Object containing the document data for replacing an existing document in a table.",
+  "type": "object",
+  "required": [
+    "doc"
+  ],
+  "properties": {
+    "doc": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Object containing the new document data to replace the existing one."
+    }
+  },
+  "example": {
+    "doc": {
+      "title": "This is some title",
+      "gid": 100
+    }
+  }
+}

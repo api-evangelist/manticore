@@ -1,0 +1,153 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "manticore": "https://manticoresearch.com/vocab/",
+    "openapi": "https://www.openapis.org/schema/",
+    "operationId": "manticore:operationId",
+    "method": "manticore:method",
+    "path": "manticore:path",
+    "summary": "schema:description",
+    "tags": "schema:keywords"
+  },
+  "@graph": [
+    {
+      "@type": "WebAPI",
+      "@id": "https://manticoresearch.com/api",
+      "name": "Manticore Search Client",
+      "description": "\u0421lient for Manticore Search.",
+      "version": "5.0.0",
+      "license": "http://opensource.org/licenses/MIT",
+      "contactEmail": "info@manticoresearch.com",
+      "url": "https://manticoresearch.com/contact-us/",
+      "documentation": "https://manual.manticoresearch.com/",
+      "termsOfService": "https://manticoresearch.com/",
+      "keywords": [
+        "Index",
+        "Search",
+        "Utils"
+      ],
+      "hasPart": [
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#search",
+          "name": "Performs a search on a table",
+          "description": "\nThe method expects an object with the following mandatory properties:\n* the name of the table to search\n* the match query object\nFor details, see the documentation on [**SearchRequest**](SearchRequest.md)\nThe method returns an object with the following properties:\n- took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:\n   - total: the total number of hits found.\n   - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:\n     - _id: the ID of the matched document.\n     - _score: the score of the matched document.\n     - _source: the source data of the matched document.\n\nIn addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional 'scroll' property with a scroll token to use for pagination\nHere is an example search response:\n\n  ```\n  {\n    'took':10,\n    'timed_out':false,\n    'hits':\n    {\n      'total':2,\n      'hits':\n      [\n        {'_id':'1','_score':1,'_source':{'gid':11}},\n        {'_id':'2','_score':1,'_source':{'gid':12}}\n      ]\n    }\n  }\n  ```\n\nFor more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON).\n",
+          "operationId": "search",
+          "method": "POST",
+          "path": "/search",
+          "tags": [
+            "Search"
+          ]
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#autocomplete",
+          "name": "Performs an autocomplete search on a table",
+          "description": "\nThe method expects an object with the following mandatory properties:\n* the name of the table to search\n* the query string to autocomplete\nFor details, see the documentation on [**Autocomplete**](Autocomplete.md)\nAn example: ``` {\n  \"table\":\"table_name\",\n  \"query\":\"query_beginning\"\n}         ```\nAn example of the method's response:\n\n ```\n [\n   {\n     \"total\": 3,\n     \"error\": \"\",\n     \"warning\": \"\",\n     \"columns\": [\n       {\n         \"query\": {\n           \"type\": \"string\"\n         }\n       }\n     ],\n     \"data\": [\n       {\n         \"query\": \"hello\"\n       },\n       {\n         \"query\": \"helio\"\n       },\n       {\n         \"query\": \"hell\"\n       }\n     ]\n   }\n ] \n ```\n\nFor more detailed information about the autocomplete queries, please refer to the documentation [here](https://manual.manticoresearch.com/Searching/Autocomplete).\n",
+          "operationId": "autocomplete",
+          "method": "POST",
+          "path": "/autocomplete",
+          "tags": [
+            "Search"
+          ]
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#bulk",
+          "name": "Bulk table operations",
+          "description": "Sends multiple operatons like inserts, updates, replaces or deletes. \nFor each operation it's object must have same format as in their dedicated method. \nThe method expects a raw string as the batch in NDJSON.\n Each operation object needs to be serialized to \n JSON and separated by endline (\\n). \n \n  An example of raw input:\n  \n  ```\n  {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}\n  \\n\n  {\"delete\": {\"table\": \"movies\",\"id\":700}}\n  ```\n  \n  Responds with an object telling whenever any errors occured and an array with status for each operation:\n  \n  ```\n  {\n    'items':\n    [\n      {\n        'update':{'table':'products','id':1,'result':'updated'}\n      },\n      {\n        'update':{'table':'products','id':2,'result':'updated'}\n      }\n    ],\n    'errors':false\n  }\n  ```\n",
+          "operationId": "bulk",
+          "method": "POST",
+          "path": "/bulk",
+          "tags": [
+            "Index"
+          ]
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#delete",
+          "name": "Delete a document in a table",
+          "description": "Delete one or several documents.\nThe method has 2 ways of deleting: either by id, in case only one document is deleted or by using a  match query, in which case multiple documents can be delete .\nExample of input to delete by id:\n\n  ```\n  {'table':'movies','id':100}\n  ```\n\nExample of input to delete using a query:\n\n  ```\n  {\n    'table':'movies',\n    'query':\n    {\n      'bool':\n      {\n        'must':\n        [\n          {'query_string':'new movie'}\n        ]\n      }\n    }\n  }\n  ```\n\nThe match query has same syntax as in for searching.\nResponds with an object telling how many documents got deleted: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n",
+          "operationId": "delete",
+          "method": "POST",
+          "path": "/delete",
+          "tags": [
+            "Index"
+          ]
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#insert",
+          "name": "Create a new document in a table",
+          "description": "Insert a document. \nExpects an object like:\n \n  ```\n  {\n    'table':'movies',\n    'id':701,\n    'doc':\n    {\n      'title':'This is an old movie',\n      'plot':'A secret team goes to North Pole',\n      'year':1950,\n      'rating':9.5,\n      'lat':60.4,\n      'lon':51.99,\n      'advise':'PG-13',\n      'meta':'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}',\n      'language':[2,3]\n    }\n  }\n  ```\n \nThe document id can also be missing, in which case an autogenerated one will be used:\n         \n  ```\n  {\n    'table':'movies',\n    'doc':\n    {\n      'title':'This is a new movie',\n      'plot':'A secret team goes to North Pole',\n      'year':2020,\n      'rating':9.5,\n      'lat':60.4,\n      'lon':51.99,\n      'advise':'PG-13',\n      'meta':'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}',\n      'language':[2,3]\n    }\n  }\n  ```\n \nIt responds with an object in format:\n  \n  ```\n  {'table':'products','id':701,'created':true,'result':'created','status':201}\n  ```\n",
+          "operationId": "insert",
+          "method": "POST",
+          "path": "/insert",
+          "tags": [
+            "Index"
+          ]
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#percolate",
+          "name": "Perform reverse search on a percolate table",
+          "description": "Performs a percolate search.\nThis method must be used only on percolate tables.\nExpects two parameters: the table name and an object with array of documents to be tested.\nAn example of the documents object: ```\n  {\n    \"query\" {\n      \"percolate\": {\n        \"document\": {\n          \"content\":\"sample content\"\n        }\n      }\n    }\n  }\n```\nResponds with an object with matched stored queries:  ```\n  {\n    'timed_out':false,\n    'hits': {\n      'total':2,\n      'max_score':1,\n      'hits': [\n        {\n          'table':'idx_pq_1',\n          '_type':'doc',\n          '_id':'2',\n          '_score':'1',\n          '_source': {\n            'query': {\n              'match':{'title':'some'}\n            }\n          }\n        },\n        {\n          'table':'idx_pq_1',\n          '_type':'doc',\n          '_id':'5',\n          '_score':'1',\n          '_source': {\n            'query': {\n              'ql':'some | none'\n            }\n          }\n        }\n      ]\n    }\n  }\n```\n",
+          "operationId": "percolate",
+          "method": "POST",
+          "path": "/pq/{table}/search",
+          "tags": [
+            "Search"
+          ]
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#replace",
+          "name": "Replace new document in a table",
+          "description": "Replace an existing document. Input has same format as `insert` operation.\nResponds with an object in format:\n\n  ```\n  {'table':'products','id':1,'created':false,'result':'updated','status':200}\n  ```\n",
+          "operationId": "replace",
+          "method": "POST",
+          "path": "/replace",
+          "tags": [
+            "Index"
+          ]
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#sql",
+          "name": "Perform SQL requests",
+          "description": "Run a query in SQL format.\nExpects a query string passed through `body` parameter and optional `raw_response` parameter that defines a format of response.\n`raw_response` can be set to `False` for Select queries only, e.g., `SELECT * FROM mytable`\nThe query string must stay as it is, no URL encoding is needed.\nThe response object depends on the query executed. In select mode the response has same format as `/search` operation.\n",
+          "operationId": "sql",
+          "method": "POST",
+          "path": "/sql",
+          "tags": [
+            "utils"
+          ]
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#update",
+          "name": "Update a document in a table",
+          "description": "Update one or several documents.\nThe update can be made by passing the id or by using a match query in case multiple documents can be updated.  For example update a document using document id:\n\n  ```\n  {'table':'movies','doc':{'rating':9.49},'id':100}\n  ```\n\nAnd update by using a match query:\n\n  ```\n  {\n    'table':'movies',\n    'doc':{'rating':9.49},\n    'query':\n    {\n      'bool':\n      {\n        'must':\n        [\n          {'query_string':'new movie'}\n        ]\n      }\n    }\n  }\n  ``` \n\nThe match query has same syntax as for searching.\nResponds with an object that tells how many documents where updated in format: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n",
+          "operationId": "update",
+          "method": "POST",
+          "path": "/update",
+          "tags": [
+            "Index"
+          ]
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://manticoresearch.com/api#partial_replace",
+          "name": "Partially replaces a document in a table",
+          "description": "Partially replaces a document with given id in a table\nResponds with an object of the following format: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n",
+          "operationId": "partial_replace",
+          "method": "POST",
+          "path": "/{table}/_update/{id}",
+          "tags": [
+            "Index"
+          ]
+        }
+      ]
+    }
+  ]
+}

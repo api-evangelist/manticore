@@ -1,0 +1,8 @@
+{
+  "operationId": "replace",
+  "method": "POST",
+  "path": "/replace",
+  "summary": "Replace new document in a table",
+  "description": "Replace an existing document. Input has same format as `insert` operation.\nResponds with an object in format:\n\n  ```\n  {'table':'products','id':1,'created':false,'result':'updated','status':200}\n  ```\n",
+  "requestExample": "test"
+}

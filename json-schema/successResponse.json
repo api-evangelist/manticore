@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/successResponse.json",
+  "title": "successResponse",
+  "description": "Response object indicating the success of an operation, such as inserting or updating a document",
+  "type": "object",
+  "properties": {
+    "table": {
+      "type": "string",
+      "description": "Name of the document table"
+    },
+    "id": {
+      "type": "integer",
+      "format": "uint64",
+      "description": "ID of the document affected by the request operation"
+    },
+    "created": {
+      "type": "boolean",
+      "description": "Indicates whether the document was created as a result of the operation"
+    },
+    "result": {
+      "type": "string",
+      "description": "Result of the operation, typically 'created', 'updated', or 'deleted'"
+    },
+    "found": {
+      "type": "boolean",
+      "description": "Indicates whether the document was found in the table"
+    },
+    "status": {
+      "type": "integer",
+      "description": "HTTP status code representing the result of the operation"
+    }
+  },
+  "example": {
+    "table": "test",
+    "id": 1,
+    "result": "created",
+    "created": true,
+    "status": 201
+  }
+}

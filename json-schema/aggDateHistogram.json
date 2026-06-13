@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/aggDateHistogram.json",
+  "title": "aggDateHistogram",
+  "description": "Object to use histograms in aggregation, i.e., grouping search results by histogram values",
+  "additionalProperties": false,
+  "properties": {
+    "field": {
+      "description": "Field to group by",
+      "example": "field",
+      "type": "string"
+    },
+    "interval": {
+      "description": "Interval of the histogram values",
+      "example": 10,
+      "type": "integer"
+    },
+    "offset": {
+      "description": "Offset of the histogram values. Default value is 0.",
+      "example": 1,
+      "type": "integer"
+    },
+    "keyed": {
+      "description": "Flag that defines if a search response will be a dictionary with the bucket keys. Default value is false.",
+      "example": true,
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "field",
+    "interval"
+  ]
+}

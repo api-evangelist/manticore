@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/deleteDocumentRequest.json",
+  "title": "deleteDocumentRequest",
+  "description": "Payload for delete request.\nDocuments can be deleted either one by one by specifying the document id or by providing a query object.\nFor more information see  [Delete API](https://manual.manticoresearch.com/Deleting_documents)\n",
+  "type": "object",
+  "required": [
+    "table"
+  ],
+  "properties": {
+    "table": {
+      "type": "string",
+      "description": "Table name"
+    },
+    "cluster": {
+      "type": "string",
+      "description": "Cluster name"
+    },
+    "id": {
+      "type": "integer",
+      "format": "uint64",
+      "description": "The ID of document for deletion"
+    },
+    "query": {
+      "type": "object",
+      "description": "Defines the criteria to match documents for deletion"
+    }
+  },
+  "example": {
+    "table": "test",
+    "id": 1
+  }
+}

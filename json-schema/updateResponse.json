@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/updateResponse.json",
+  "title": "updateResponse",
+  "description": "Success response returned after updating one or more documents",
+  "type": "object",
+  "properties": {
+    "table": {
+      "type": "string",
+      "description": "Name of the document table"
+    },
+    "updated": {
+      "type": "integer",
+      "description": "Number of documents updated"
+    },
+    "id": {
+      "type": "integer",
+      "format": "uint64",
+      "description": "Document ID"
+    },
+    "result": {
+      "type": "string",
+      "description": "Result of the update operation, typically 'updated'"
+    }
+  },
+  "example": {
+    "table": "test",
+    "updated": 29
+  }
+}

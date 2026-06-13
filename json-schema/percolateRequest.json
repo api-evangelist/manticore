@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/percolateRequest.json",
+  "title": "percolateRequest",
+  "description": "Object containing the query for percolating documents against stored queries in a percolate table",
+  "type": "object",
+  "required": [
+    "query"
+  ],
+  "properties": {
+    "query": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "percolate"
+      ],
+      "properties": {
+        "percolate": {
+          "type": "object",
+          "description": "Object representing the document to percolate"
+        }
+      },
+      "example": {
+        "percolate": {
+          "document": {
+            "title": "some text to match"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/bulkResponse.json",
+  "title": "bulkResponse",
+  "description": "Success response for bulk search requests",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "List of results"
+    },
+    "errors": {
+      "type": "boolean",
+      "description": "Errors occurred during the bulk operation"
+    },
+    "error": {
+      "type": "string",
+      "description": "Error message describing an error if such occurred"
+    },
+    "current_line": {
+      "type": "integer",
+      "description": "Number of the row returned in the response"
+    },
+    "skipped_lines": {
+      "type": "integer",
+      "description": "Number of rows skipped in the response"
+    }
+  }
+}

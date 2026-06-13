@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/responseErrorText.json",
+  "title": "responseErrorText",
+  "description": "Error message text returned in case of an error",
+  "type": "string"
+}

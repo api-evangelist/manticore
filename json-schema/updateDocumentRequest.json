@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/updateDocumentRequest.json",
+  "title": "updateDocumentRequest",
+  "description": "Payload for updating a document or multiple documents in a table",
+  "type": "object",
+  "required": [
+    "table",
+    "doc"
+  ],
+  "properties": {
+    "table": {
+      "type": "string",
+      "description": "Name of the document table"
+    },
+    "cluster": {
+      "type": "string",
+      "description": "Name of the document cluster"
+    },
+    "doc": {
+      "type": "object",
+      "description": "Object containing the document fields to update",
+      "additionalProperties": true,
+      "example": {
+        "gid": 10
+      }
+    },
+    "id": {
+      "type": "integer",
+      "format": "uint64",
+      "description": "Document ID"
+    },
+    "query": {
+      "oneOf": [
+        {
+          "type": null
+        },
+        {
+          "$ref": "#/components/schemas/queryFilter"
+        }
+      ],
+      "description": "Object defining conditions to perform the updates",
+      "example": {
+        "query": {
+          "match": {
+            "title": "match me"
+          }
+        }
+      }
+    }
+  }
+}

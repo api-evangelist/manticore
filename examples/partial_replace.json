@@ -1,0 +1,7 @@
+{
+  "operationId": "partial_replace",
+  "method": "POST",
+  "path": "/{table}/_update/{id}",
+  "summary": "Partially replaces a document in a table",
+  "description": "Partially replaces a document with given id in a table\nResponds with an object of the following format: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n"
+}

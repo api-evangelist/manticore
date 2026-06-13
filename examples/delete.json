@@ -1,0 +1,8 @@
+{
+  "operationId": "delete",
+  "method": "POST",
+  "path": "/delete",
+  "summary": "Delete a document in a table",
+  "description": "Delete one or several documents.\nThe method has 2 ways of deleting: either by id, in case only one document is deleted or by using a  match query, in which case multiple documents can be delete .\nExample of input to delete by id:\n\n  ```\n  {'table':'movies','id':100}\n  ```\n\nExample of input to delete using a query:\n\n  ```\n  {\n    'table':'movies',\n    'query':\n    {\n      'bool':\n      {\n        'must':\n        [\n          {'query_string':'new movie'}\n        ]\n      }\n    }\n  }\n  ```\n\nThe match query has same syntax as in for searching.\nResponds with an object telling how many documents got deleted: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n",
+  "requestExample": "test"
+}

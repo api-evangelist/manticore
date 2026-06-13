@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/queryFilter.json",
+  "title": "queryFilter",
+  "description": "Object used to apply various conditions, such as full-text matching or attribute filtering, to a search query",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/fulltextFilter"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "bool": {
+          "$ref": "#/components/schemas/boolFilter"
+        },
+        "equals": {
+          "type": {},
+          "description": "Filter to match exact attribute values."
+        },
+        "in": {
+          "type": "object",
+          "description": "Filter to match a given set of attribute values."
+        },
+        "range": {
+          "type": "object",
+          "description": "Filter to match a given range of attribute values passed in Range objects"
+        },
+        "geo_distance": {
+          "$ref": "#/components/schemas/geoDistance"
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

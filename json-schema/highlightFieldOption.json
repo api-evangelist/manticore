@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/highlightFieldOption.json",
+  "title": "highlightFieldOption",
+  "description": "Options for controlling the behavior of highlighting on a per-field basis",
+  "type": "object",
+  "properties": {
+    "fragment_size": {
+      "type": "integer",
+      "description": "Maximum size of the text fragments in highlighted snippets per field"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Maximum size of snippets per field"
+    },
+    "limit_snippets": {
+      "type": "integer",
+      "description": "Maximum number of snippets per field"
+    },
+    "limit_words": {
+      "type": "integer",
+      "description": "Maximum number of words per field"
+    },
+    "number_of_fragments": {
+      "type": "integer",
+      "description": "Total number of highlighted fragments per field"
+    }
+  },
+  "additionalProperties": false
+}

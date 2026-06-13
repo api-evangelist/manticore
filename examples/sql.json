@@ -1,0 +1,8 @@
+{
+  "operationId": "sql",
+  "method": "POST",
+  "path": "/sql",
+  "summary": "Perform SQL requests",
+  "description": "Run a query in SQL format.\nExpects a query string passed through `body` parameter and optional `raw_response` parameter that defines a format of response.\n`raw_response` can be set to `False` for Select queries only, e.g., `SELECT * FROM mytable`\nThe query string must stay as it is, no URL encoding is needed.\nThe response object depends on the query executed. In select mode the response has same format as `/search` operation.\n",
+  "requestExample": "SHOW TABLES"
+}

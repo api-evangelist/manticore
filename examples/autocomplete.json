@@ -1,0 +1,10 @@
+{
+  "operationId": "autocomplete",
+  "method": "POST",
+  "path": "/autocomplete",
+  "summary": "Performs an autocomplete search on a table",
+  "description": "\nThe method expects an object with the following mandatory properties:\n* the name of the table to search\n* the query string to autocomplete\nFor details, see the documentation on [**Autocomplete**](Autocomplete.md)\nAn example: ``` {\n  \"table\":\"table_name\",\n  \"query\":\"query_beginning\"\n}         ```\nAn example of the method's response:\n\n ```\n [\n   {\n     \"total\": 3,\n     \"error\": \"\",\n     \"warning\": \"\",\n     \"columns\": [\n       {\n         \"query\": {\n           \"type\": \"string\"\n         }\n       }\n     ],\n     \"data\": [\n       {\n         \"query\": \"hello\"\n       },\n       {\n         \"query\": \"helio\"\n       },\n       {\n         \"query\": \"hell\"\n       }\n     ]\n   }\n ] \n ```\n\nFor more detailed information about the autocomplete queries, please refer to the documentation [here](https://manual.manticoresearch.com/Searching/Autocomplete).\n",
+  "requestExample": [
+    "'request=AutocompleteRequest(table=\"test\",query=\"abc\")'"
+  ]
+}

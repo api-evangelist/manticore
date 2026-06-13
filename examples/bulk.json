@@ -1,0 +1,7 @@
+{
+  "operationId": "bulk",
+  "method": "POST",
+  "path": "/bulk",
+  "summary": "Bulk table operations",
+  "description": "Sends multiple operatons like inserts, updates, replaces or deletes. \nFor each operation it's object must have same format as in their dedicated method. \nThe method expects a raw string as the batch in NDJSON.\n Each operation object needs to be serialized to \n JSON and separated by endline (\\n). \n \n  An example of raw input:\n  \n  ```\n  {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}\n  \\n\n  {\"delete\": {\"table\": \"movies\",\"id\":700}}\n  ```\n  \n  Responds with an object telling whenever any errors occured and an array with status for each operation:\n  \n  ```\n  {\n    'items':\n    [\n      {\n        'update':{'table':'products','id':1,'result':'updated'}\n      },\n      {\n        'update':{'table':'products','id':2,'result':'updated'}\n      }\n    ],\n    'errors':false\n  }\n  ```\n"
+}

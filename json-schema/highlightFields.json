@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/highlightFields.json",
+  "title": "highlightFields",
+  "description": "List of fields available for highlighting",
+  "oneOf": [
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "type": "object"
+    }
+  ]
+}

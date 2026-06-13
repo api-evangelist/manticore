@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/sqlResponse.json",
+  "title": "sqlResponse",
+  "description": "List of responses from executed SQL queries",
+  "oneOf": [
+    {
+      "$ref": "#/components/schemas/sqlRawResponse"
+    },
+    {
+      "$ref": "#/components/schemas/sqlObjResponse"
+    }
+  ],
+  "example": [
+    {
+      "total": 0,
+      "error": null
+    }
+  ]
+}

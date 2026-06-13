@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/searchQuery.json",
+  "title": "searchQuery",
+  "description": "Defines a query structure for performing search operations",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/queryFilter"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "highlight": {
+          "$ref": "#/components/schemas/highlight"
+        }
+      }
+    }
+  ]
+}

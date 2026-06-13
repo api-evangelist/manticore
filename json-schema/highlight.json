@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/highlight.json",
+  "title": "highlight",
+  "description": "JSON Schema for Manticore Search highlight",
+  "allOf": [
+    {
+      "type": "object",
+      "description": "Defines a query HIGHLIGHT expression to emphasize matched results",
+      "properties": {
+        "after_match": {
+          "type": "string",
+          "default": "</strong>",
+          "description": "Text inserted after the matched term, typically used for HTML formatting"
+        },
+        "allow_empty": {
+          "type": "boolean",
+          "description": "Permits an empty string to be returned as the highlighting result. Otherwise, the beginning of the original text would be returned"
+        },
+        "around": {
+          "type": "integer",
+          "description": "Number of words around the match to include in the highlight"
+        },
+        "before_match": {
+          "type": "string",
+          "default": "<strong>",
+          "description": "Text inserted before the match, typically used for HTML formatting"
+        },
+        "emit_zones": {
+          "type": "boolean",
+          "description": "Emits an HTML tag with the enclosing zone name before each highlighted snippet"
+        },
+        "encoder": {
+          "type": "string",
+          "enum": [
+            "default",
+            "html"
+          ],
+          "description": "If set to 'html', retains HTML markup when highlighting"
+        },
+        "fields": {
+          "$ref": "#/components/schemas/highlightFields"
+        },
+        "force_all_words": {
+          "type": "boolean",
+          "description": "Ignores the length limit until the result includes all keywords"
+        },
+        "force_snippets": {
+          "type": "boolean",
+          "description": "Forces snippet generation even if limits allow highlighting the entire text"
+        },
+        "highlight_query": {
+          "oneOf": [
+            {
+              "type": null
+            },
+            {
+              "$ref": "#/components/schemas/queryFilter"
+            }
+          ],
+          "description": "Optional query object to customize highlighting behavior"
+        },
+        "html_strip_mode": {
+          "type": "string",
+          "enum": [
+            "none",
+            "strip",
+            "index",
+            "retain"
+          ],
+          "description": "Defines the mode for handling HTML markup in the highlight"
+        },
+        "limits_per_field": {
+          "type": "boolean",
+          "description": "Determines whether the 'limit', 'limit_words', and 'limit_snippets' options operate as individual limits in each field of the document"
+        },
+        "no_match_size": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "If set to 1, allows an empty string to be returned as a highlighting result"
+        },
+        "order": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc",
+            "score"
+          ],
+          "description": "Sets the sorting order of highlighted snippets"
+        },
+        "pre_tags": {
+          "type": "string",
+          "default": "<strong>",
+          "description": "Text inserted before each highlighted snippet"
+        },
+        "post_tags": {
+          "type": "string",
+          "default": "</strong>",
+          "description": "Text inserted after each highlighted snippet"
+        },
+        "start_snippet_id": {
+          "type": "integer",
+          "description": "Sets the starting value of the %SNIPPET_ID% macro"
+        },
+        "use_boundaries": {
+          "type": "boolean",
+          "description": "Defines whether to additionally break snippets by phrase boundary characters"
+        }
+      }
+    },
+    {
+      "$ref": "#/components/schemas/highlightFieldOption"
+    }
+  ]
+}

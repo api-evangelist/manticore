@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/geoDistance.json",
+  "title": "geoDistance",
+  "description": "Object to perform geo-distance based filtering on queries",
+  "type": "object",
+  "properties": {
+    "location_anchor": {
+      "type": "object",
+      "description": "Specifies the location of the pin point used for search",
+      "properties": {
+        "lat": {
+          "type": "number",
+          "description": "Latitude of the anchor point"
+        },
+        "lon": {
+          "type": "number",
+          "description": "Longitude of the anchor point"
+        }
+      },
+      "additionalProperties": false
+    },
+    "location_source": {
+      "type": "string",
+      "description": "Field name in the document that contains location data"
+    },
+    "distance_type": {
+      "type": "string",
+      "enum": [
+        "adaptive",
+        "haversine"
+      ],
+      "description": "Algorithm used to calculate the distance"
+    },
+    "distance": {
+      "type": "string",
+      "pattern": "/^\\.+(km|m|cm|mm|mi|yd|ft|in|NM|nmi|kilometers|meters|centimeters|millimeters|miles|yards|foots|inches|nauticalmiles|)$/",
+      "description": "The distance from the anchor point to filter results by"
+    }
+  },
+  "additionalProperties": false
+}

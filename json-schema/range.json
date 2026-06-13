@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/range.json",
+  "title": "range",
+  "description": "Filter helper object defining the 'range' condition",
+  "type": "object",
+  "properties": {
+    "lt": {
+      "type": {},
+      "description": "<Less than> condition value"
+    },
+    "lte": {
+      "type": {},
+      "description": "<Less than or equal> condition value"
+    },
+    "gt": {
+      "type": {},
+      "description": "<Greater than> condition value"
+    },
+    "gte": {
+      "type": {},
+      "description": "<Greater than or equal> condition value"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/aggComposite.json",
+  "title": "aggComposite",
+  "description": "Object to perform composite aggregation, i.e., grouping search results by multiple fields",
+  "type": "object",
+  "properties": {
+    "size": {
+      "type": "integer",
+      "description": "Maximum number of composite buckets in the result",
+      "example": 1000
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "List of objects that contain terms used for composite aggregation.",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/aggCompositeSource"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/joinCond.json",
+  "title": "joinCond",
+  "description": "Object representing the conditions used to perform the join operation",
+  "type": "object",
+  "required": [
+    "field",
+    "table"
+  ],
+  "properties": {
+    "field": {
+      "type": "string",
+      "description": "Field to join on"
+    },
+    "table": {
+      "type": "string",
+      "description": "Joined table"
+    },
+    "query": {
+      "$ref": "#/components/schemas/fulltextFilter"
+    },
+    "type": {
+      "type": {}
+    }
+  },
+  "additionalProperties": false
+}

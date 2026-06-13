@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/aggCompositeTerm.json",
+  "title": "aggCompositeTerm",
+  "description": "Object representing a term to be used in composite aggregation.",
+  "type": "object",
+  "required": [
+    "field"
+  ],
+  "properties": {
+    "field": {
+      "type": "string",
+      "description": "Name of field to operate with",
+      "example": "field1"
+    }
+  },
+  "additionalProperties": false
+}

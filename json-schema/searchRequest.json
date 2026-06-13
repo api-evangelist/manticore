@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/manticore/main/json-schema/searchRequest.json",
+  "title": "searchRequest",
+  "description": "Request object for search operation",
+  "type": "object",
+  "required": [
+    "table"
+  ],
+  "properties": {
+    "table": {
+      "type": "string",
+      "description": "The table to perform the search on"
+    },
+    "query": {
+      "$ref": "#/components/schemas/searchQuery"
+    },
+    "join": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/join"
+      },
+      "description": "Join clause to combine search data from multiple tables"
+    },
+    "highlight": {
+      "$ref": "#/components/schemas/highlight"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Maximum number of results to return"
+    },
+    "knn": {
+      "$ref": "#/components/schemas/knn"
+    },
+    "aggs": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/aggregation"
+      },
+      "example": {
+        "agg1": {
+          "terms": {
+            "field": "field1",
+            "size": 1000,
+            "sort": [
+              {
+                "field1": null,
+                "order": "asc"
+              }
+            ]
+          }
+        }
+      },
+      "description": "Defines aggregation settings for grouping results"
+    },
+    "expressions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "example": {
+        "title_len": "crc32(title)"
+      },
+      "description": "Expressions to calculate additional values for the result"
+    },
+    "max_matches": {
+      "type": "integer",
+      "description": "Maximum number of matches allowed in the result"
+    },
+    "offset": {
+      "type": "integer",
+      "description": "Starting point for pagination of the result"
+    },
+    "options": {
+      "type": "object",
+      "description": "Additional search options"
+    },
+    "profile": {
+      "type": "boolean",
+      "description": "Enable or disable profiling of the search request"
+    },
+    "sort": {
+      "type": {},
+      "description": "Sorting criteria for the search results"
+    },
+    "_source": {
+      "type": {},
+      "description": "Specify which fields to include or exclude in the response"
+    },
+    "track_scores": {
+      "type": "boolean",
+      "description": "Enable or disable result weight calculation used for sorting"
+    }
+  },
+  "example": {
+    "table": "your_table",
+    "query": {
+      "query_string": "your_query"
+    }
+  }
+}
