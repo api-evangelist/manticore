@@ -33,6 +33,8 @@ apis:
         url: https://raw.githubusercontent.com/manticoresoftware/openapi/master/manticore.yml
 
 common:
+  - type: DomainSecurity
+    url: security/manticore-domain-security.yml
   - type: Website
     url: https://manticoresearch.com/
   - type: Documentation
