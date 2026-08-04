@@ -1,0 +1,18 @@
+{
+  "provider": "manticore",
+  "sources": [
+    "manticore-index-api-openapi.yml",
+    "manticore-search-api-openapi.yml",
+    "manticore-utils-api-openapi.yml"
+  ],
+  "outputs": [
+    "manticore-index-api-openapi.yml",
+    "manticore-search-api-openapi.yml",
+    "manticore-utils-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
