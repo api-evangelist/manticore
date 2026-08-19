@@ -1,0 +1,872 @@
+{
+  "item": [
+    {
+      "id": "43e86dd0-d7f6-4f49-97c4-90284a41e657",
+      "name": "Index",
+      "description": {
+        "content": "Operations regarding adding, updating or deleting documents",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a74dbf5c-f75b-4fc4-8d9b-164164278996",
+          "name": "Bulk table operations",
+          "request": {
+            "name": "Bulk table operations",
+            "description": {
+              "content": "Sends multiple operatons like inserts, updates, replaces or deletes. \nFor each operation it's object must have same format as in their dedicated method. \nThe method expects a raw string as the batch in NDJSON.\n Each operation object needs to be serialized to \n JSON and separated by endline (\\n). \n \n  An example of raw input:\n  \n  ```\n  {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}\n  \\n\n  {\"delete\": {\"table\": \"movies\",\"id\":700}}\n  ```\n  \n  Responds with an object telling whenever any errors occured and an array with status for each operation:\n  \n  ```\n  {\n    'items':\n    [\n      {\n        'update':{'table':'products','id':1,'result':'updated'}\n      },\n      {\n        'update':{'table':'products','id':2,'result':'updated'}\n      }\n    ],\n    'errors':false\n  }\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-ndjson"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>"
+            }
+          },
+          "response": [
+            {
+              "id": "31beae92-c170-4c1c-a032-1eaa649c01e7",
+              "name": "item updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": false,\n  \"error\": \"string\",\n  \"current_line\": 6767,\n  \"skipped_lines\": 4671\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38dd00a2-e63e-47f5-941e-6a9460c94789",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81373e77-e567-4c5e-bd72-460c537a282e",
+          "name": "Delete a document in a table",
+          "request": {
+            "name": "Delete a document in a table",
+            "description": {
+              "content": "Delete one or several documents.\nThe method has 2 ways of deleting: either by id, in case only one document is deleted or by using a  match query, in which case multiple documents can be delete .\nExample of input to delete by id:\n\n  ```\n  {'table':'movies','id':100}\n  ```\n\nExample of input to delete using a query:\n\n  ```\n  {\n    'table':'movies',\n    'query':\n    {\n      'bool':\n      {\n        'must':\n        [\n          {'query_string':'new movie'}\n        ]\n      }\n    }\n  }\n  ```\n\nThe match query has same syntax as in for searching.\nResponds with an object telling how many documents got deleted: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table\": \"<string>\",\n  \"cluster\": \"<string>\",\n  \"id\": \"<uint64>\",\n  \"query\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ffa5a2bd-2504-4fdb-90df-3b66ae5e86f3",
+              "name": "item updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": \"test\",\n  \"query\": {\n    \"match\": {\n      \"title\": \"apple\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": \"test\",\n  \"deleted\": 29\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f452b2f5-1aa2-4c6d-942f-4056a7739621",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": \"test\",\n  \"query\": {\n    \"match\": {\n      \"title\": \"apple\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f0baf41-ca4a-4b68-a9de-6280befbfb3e",
+          "name": "Create a new document in a table",
+          "request": {
+            "name": "Create a new document in a table",
+            "description": {
+              "content": "Insert a document. \nExpects an object like:\n \n  ```\n  {\n    'table':'movies',\n    'id':701,\n    'doc':\n    {\n      'title':'This is an old movie',\n      'plot':'A secret team goes to North Pole',\n      'year':1950,\n      'rating':9.5,\n      'lat':60.4,\n      'lon':51.99,\n      'advise':'PG-13',\n      'meta':'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}',\n      'language':[2,3]\n    }\n  }\n  ```\n \nThe document id can also be missing, in which case an autogenerated one will be used:\n         \n  ```\n  {\n    'table':'movies',\n    'doc':\n    {\n      'title':'This is a new movie',\n      'plot':'A secret team goes to North Pole',\n      'year':2020,\n      'rating':9.5,\n      'lat':60.4,\n      'lon':51.99,\n      'advise':'PG-13',\n      'meta':'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}',\n      'language':[2,3]\n    }\n  }\n  ```\n \nIt responds with an object in format:\n  \n  ```\n  {'table':'products','id':701,'created':true,'result':'created','status':201}\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insert"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table\": \"<string>\",\n  \"doc\": {\n    \"key_0\": true\n  },\n  \"cluster\": \"<string>\",\n  \"id\": \"<uint64>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6084caea-3ceb-4774-9fae-e1ebc2adc5b7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": \"test\",\n  \"id\": 1,\n  \"doc\": {\n    \"title\": \"sample title\",\n    \"gid\": 10\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": \"test\",\n  \"id\": 1,\n  \"result\": \"created\",\n  \"created\": true,\n  \"status\": 201\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77f99df4-5dc5-445d-9c2f-edf0ed482e90",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": \"test\",\n  \"id\": 1,\n  \"doc\": {\n    \"title\": \"sample title\",\n    \"gid\": 10\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57ab616e-2e31-4457-b117-f157b5e64d72",
+          "name": "Replace new document in a table",
+          "request": {
+            "name": "Replace new document in a table",
+            "description": {
+              "content": "Replace an existing document. Input has same format as `insert` operation.\nResponds with an object in format:\n\n  ```\n  {'table':'products','id':1,'created':false,'result':'updated','status':200}\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "replace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table\": \"<string>\",\n  \"doc\": {\n    \"key_0\": true\n  },\n  \"cluster\": \"<string>\",\n  \"id\": \"<uint64>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6c1d191b-3a98-4ffe-bc71-5e677765785c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": \"test\",\n  \"id\": 1,\n  \"doc\": {\n    \"title\": \"updated title\",\n    \"gid\": 15\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": \"test\",\n  \"id\": 1,\n  \"result\": \"created\",\n  \"created\": true,\n  \"status\": 201\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "838efde1-3ab9-4b1b-b0ee-943a079e41ca",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": \"test\",\n  \"id\": 1,\n  \"doc\": {\n    \"title\": \"updated title\",\n    \"gid\": 15\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "642d1dd4-856d-4e14-b9a7-22b03ea9512b",
+          "name": "Update a document in a table",
+          "request": {
+            "name": "Update a document in a table",
+            "description": {
+              "content": "Update one or several documents.\nThe update can be made by passing the id or by using a match query in case multiple documents can be updated.  For example update a document using document id:\n\n  ```\n  {'table':'movies','doc':{'rating':9.49},'id':100}\n  ```\n\nAnd update by using a match query:\n\n  ```\n  {\n    'table':'movies',\n    'doc':{'rating':9.49},\n    'query':\n    {\n      'bool':\n      {\n        'must':\n        [\n          {'query_string':'new movie'}\n        ]\n      }\n    }\n  }\n  ``` \n\nThe match query has same syntax as for searching.\nResponds with an object that tells how many documents where updated in format: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table\": \"<string>\",\n  \"doc\": {\n    \"key_0\": 8689.430227442874,\n    \"key_1\": 3028.096484216737\n  },\n  \"cluster\": \"<string>\",\n  \"id\": \"<uint64>\",\n  \"query\": \"<null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "045cd76a-ce06-4e3a-9e7e-d36f058d4e87",
+              "name": "item updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": \"test\",\n  \"doc\": {\n    \"gid\": 20\n  },\n  \"query\": {\n    \"equals\": {\n      \"cat_id\": 2\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": \"test\",\n  \"updated\": 29\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73381fc3-3bbd-482a-94ff-4ecc95832c2f",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": \"test\",\n  \"doc\": {\n    \"gid\": 20\n  },\n  \"query\": {\n    \"equals\": {\n      \"cat_id\": 2\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5f777016-cb34-48fc-a2b6-025014ed175b",
+          "name": "Partially replaces a document in a table",
+          "request": {
+            "name": "Partially replaces a document in a table",
+            "description": {
+              "content": "Partially replaces a document with given id in a table\nResponds with an object of the following format: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ":table",
+                "_update",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table",
+                  "description": "(Required) Name of the percolate table"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uint64>",
+                  "key": "id",
+                  "description": "(Required) Id of the document to replace"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doc\": {\n    \"key_0\": \"string\",\n    \"key_1\": 9281.693122722201,\n    \"key_2\": true,\n    \"key_3\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1b17659-8f9e-432d-898e-09b663ab3cca",
+              "name": "item updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":table",
+                    "_update",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table",
+                      "description": "(Required) Name of the percolate table"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uint64>",
+                      "key": "id",
+                      "description": "(Required) Id of the document to replace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"doc\": {\n    \"price\": 20\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": \"test\",\n  \"updated\": 29\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7deab41-60bb-453a-b2b1-254e59cbec5e",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":table",
+                    "_update",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table",
+                      "description": "(Required) Name of the percolate table"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uint64>",
+                      "key": "id",
+                      "description": "(Required) Id of the document to replace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"doc\": {\n    \"price\": 20\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://127.0.0.1:9308/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7788d3bd-dee8-4e76-b510-7067b2904ade",
+    "name": "Manticore Search Client Index API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Сlient for Manticore Search.\n\n\nContact Support:\n Name: Manticore Software Ltd.\n Email: info@manticoresearch.com",
+      "type": "text/plain"
+    }
+  }
+}

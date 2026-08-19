@@ -1,0 +1,168 @@
+{
+  "item": [
+    {
+      "id": "cd884f3e-2e90-4986-85e7-3a2e22996a44",
+      "name": "utils",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4652c54b-81c6-4f4d-ac1c-881335cdd24d",
+          "name": "Perform SQL requests",
+          "request": {
+            "name": "Perform SQL requests",
+            "description": {
+              "content": "Run a query in SQL format.\nExpects a query string passed through `body` parameter and optional `raw_response` parameter that defines a format of response.\n`raw_response` can be set to `False` for Select queries only, e.g., `SELECT * FROM mytable`\nThe query string must stay as it is, no URL encoding is needed.\nThe response object depends on the query executed. In select mode the response has same format as `/search` operation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "raw_response",
+                  "value": "true",
+                  "description": "Optional parameter, defines a format of response. Can be set to `False` for Select only queries and set to `True` for any type of queries. Default value is 'True'.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>"
+            }
+          },
+          "response": [
+            {
+              "id": "d5a9aa75-5b9a-48ce-8fa7-def4916801b0",
+              "name": "In case of SELECT-only in mode none the response schema is the same as of `search`.\nIn case of `mode=raw` or `raw_response=true` the response depends on the query executed.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "raw_response",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "SHOW TABLES"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72590af6-37c5-40da-9eca-2cd64098fc0a",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "raw_response",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "SHOW TABLES"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://127.0.0.1:9308/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "133e6b9d-f9e8-4ea1-977c-d8d2de81d001",
+    "name": "Manticore Search Client Index utils API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Сlient for Manticore Search.\n\n\nContact Support:\n Name: Manticore Software Ltd.\n Email: info@manticoresearch.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Manticore Search Client Index utils API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "utils",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Perform SQL requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://127.0.0.1:9308/sql",
+            "params": [
+              {
+                "name": "raw_response",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter, defines a format of response. Can be set to `False` for Select only queries and set to `True` for any type of queries. Default value is 'True'.\n"
+              }
+            ]
+          },
+          "docs": "Run a query in SQL format.\nExpects a query string passed through `body` parameter and optional `raw_response` parameter that defines a format of response.\n`raw_response` can be set to `False` for Select queries only, e.g., `SELECT * FROM mytable`\nThe query string must stay as it is, no URL encoding is needed.\nThe response object depends on the query executed. In select mode the response has same format as `/search` operation.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

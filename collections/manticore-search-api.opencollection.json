@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Manticore Client Index Search API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Performs a search on a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://127.0.0.1:9308/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nThe method expects an object with the following mandatory properties:\n* the name of the table to search\n* the match query object\nFor details, see the documentation on [**SearchRequest**](SearchRequest.md)\nThe method returns an object with the following properties:\n- took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:\n   - total: the total number of hits found.\n   - hits: an array of hit"
+        },
+        {
+          "info": {
+            "name": "Performs an autocomplete search on a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://127.0.0.1:9308/autocomplete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nThe method expects an object with the following mandatory properties:\n* the name of the table to search\n* the query string to autocomplete\nFor details, see the documentation on [**Autocomplete**](Autocomplete.md)\nAn example: ``` {\n  \"table\":\"table_name\",\n  \"query\":\"query_beginning\"\n}         ```\nAn example of the method's response:\n\n ```\n [\n   {\n     \"total\": 3,\n     \"error\": \"\",\n     \"warning\": \"\",\n     \"columns\": [\n       {\n         \"query\": {\n           \"type\": \"string\"\n         }\n       }\n "
+        },
+        {
+          "info": {
+            "name": "Perform reverse search on a percolate table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://127.0.0.1:9308/pq/:table/search",
+            "params": [
+              {
+                "name": "table",
+                "value": "",
+                "type": "path",
+                "description": "Name of the percolate table"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Performs a percolate search.\nThis method must be used only on percolate tables.\nExpects two parameters: the table name and an object with array of documents to be tested.\nAn example of the documents object: ```\n  {\n    \"query\" {\n      \"percolate\": {\n        \"document\": {\n          \"content\":\"sample content\"\n        }\n      }\n    }\n  }\n```\nResponds with an object with matched stored queries:  ```\n  {\n    'timed_out':false,\n    'hits': {\n      'total':2,\n      'max_score':1,\n      'hits': [\n      "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

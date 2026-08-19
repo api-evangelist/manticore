@@ -1,0 +1,464 @@
+{
+  "item": [
+    {
+      "id": "f9a3fef1-7489-448f-a3c1-d0076c0c3ea9",
+      "name": "Search",
+      "description": {
+        "content": "Operations about performing searches over tables",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c100deee-9195-4137-be8e-f8052378d0ae",
+          "name": "Performs a search on a table",
+          "request": {
+            "name": "Performs a search on a table",
+            "description": {
+              "content": "\nThe method expects an object with the following mandatory properties:\n* the name of the table to search\n* the match query object\nFor details, see the documentation on [**SearchRequest**](SearchRequest.md)\nThe method returns an object with the following properties:\n- took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:\n   - total: the total number of hits found.\n   - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:\n     - _id: the ID of the matched document.\n     - _score: the score of the matched document.\n     - _source: the source data of the matched document.\n\nIn addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional 'scroll' property with a scroll token to use for pagination\nHere is an example search response:\n\n  ```\n  {\n    'took':10,\n    'timed_out':false,\n    'hits':\n    {\n      'total':2,\n      'hits':\n      [\n        {'_id':'1','_score':1,'_source':{'gid':11}},\n        {'_id':'2','_score':1,'_source':{'gid':12}}\n      ]\n    }\n  }\n  ```\n\nFor more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table\": \"<string>\",\n  \"query\": {\n    \"query_string\": \"<string>\",\n    \"match\": \"<object>\",\n    \"match_phrase\": \"<object>\",\n    \"match_all\": \"<object>\",\n    \"bool\": {\n      \"must\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/queryFilter detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/queryFilter detected>\"\n        }\n      ],\n      \"must_not\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"should\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    \"equals\": \"<[object Object]>\",\n    \"in\": \"<object>\",\n    \"range\": \"<object>\",\n    \"geo_distance\": {\n      \"location_anchor\": {\n        \"lat\": \"<number>\",\n        \"lon\": \"<number>\"\n      },\n      \"location_source\": \"<string>\",\n      \"distance_type\": \"<string>\",\n      \"distance\": \"<string>\"\n    },\n    \"highlight\": {\n      \"after_match\": \"</strong>\",\n      \"allow_empty\": \"<boolean>\",\n      \"around\": \"<integer>\",\n      \"before_match\": \"<strong>\",\n      \"emit_zones\": \"<boolean>\",\n      \"encoder\": \"<string>\",\n      \"fields\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"force_all_words\": \"<boolean>\",\n      \"force_snippets\": \"<boolean>\",\n      \"highlight_query\": \"<null>\",\n      \"html_strip_mode\": \"<string>\",\n      \"limits_per_field\": \"<boolean>\",\n      \"no_match_size\": \"<integer>\",\n      \"order\": \"<string>\",\n      \"pre_tags\": \"<strong>\",\n      \"post_tags\": \"</strong>\",\n      \"start_snippet_id\": \"<integer>\",\n      \"use_boundaries\": \"<boolean>\",\n      \"fragment_size\": \"<integer>\",\n      \"limit\": \"<integer>\",\n      \"limit_snippets\": \"<integer>\",\n      \"limit_words\": \"<integer>\",\n      \"number_of_fragments\": \"<integer>\"\n    }\n  },\n  \"join\": [\n    {\n      \"type\": \"<string>\",\n      \"table\": \"<string>\",\n      \"true\": [\n        {\n          \"right\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"left\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"operator\": \"<string>\"\n        },\n        {\n          \"right\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"left\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"operator\": \"<string>\"\n        }\n      ],\n      \"query\": {\n        \"query_string\": \"<string>\",\n        \"match\": \"<object>\",\n        \"match_phrase\": \"<object>\",\n        \"match_all\": \"<object>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"table\": \"<string>\",\n      \"true\": [\n        {\n          \"right\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"left\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"operator\": \"<string>\"\n        },\n        {\n          \"right\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"left\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"operator\": \"<string>\"\n        }\n      ],\n      \"query\": {\n        \"query_string\": \"<string>\",\n        \"match\": \"<object>\",\n        \"match_phrase\": \"<object>\",\n        \"match_all\": \"<object>\"\n      }\n    }\n  ],\n  \"highlight\": {\n    \"after_match\": \"</strong>\",\n    \"allow_empty\": \"<boolean>\",\n    \"around\": \"<integer>\",\n    \"before_match\": \"<strong>\",\n    \"emit_zones\": \"<boolean>\",\n    \"encoder\": \"<string>\",\n    \"fields\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"force_all_words\": \"<boolean>\",\n    \"force_snippets\": \"<boolean>\",\n    \"highlight_query\": \"<null>\",\n    \"html_strip_mode\": \"<string>\",\n    \"limits_per_field\": \"<boolean>\",\n    \"no_match_size\": \"<integer>\",\n    \"order\": \"<string>\",\n    \"pre_tags\": \"<strong>\",\n    \"post_tags\": \"</strong>\",\n    \"start_snippet_id\": \"<integer>\",\n    \"use_boundaries\": \"<boolean>\",\n    \"fragment_size\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"limit_snippets\": \"<integer>\",\n    \"limit_words\": \"<integer>\",\n    \"number_of_fragments\": \"<integer>\"\n  },\n  \"limit\": \"<integer>\",\n  \"knn\": {\n    \"field\": \"<string>\",\n    \"k\": \"<integer>\",\n    \"query\": \"<string>\",\n    \"query_vector\": [\n      \"<number>\",\n      \"<number>\"\n    ],\n    \"doc_id\": \"<uint64>\",\n    \"ef\": \"<integer>\",\n    \"filter\": {\n      \"query_string\": \"<string>\",\n      \"match\": \"<object>\",\n      \"match_phrase\": \"<object>\",\n      \"match_all\": \"<object>\",\n      \"bool\": {\n        \"must\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/queryFilter detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/queryFilter detected>\"\n          }\n        ],\n        \"must_not\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"should\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"equals\": \"<[object Object]>\",\n      \"in\": \"<object>\",\n      \"range\": \"<object>\",\n      \"geo_distance\": {\n        \"location_anchor\": {\n          \"lat\": \"<number>\",\n          \"lon\": \"<number>\"\n        },\n        \"location_source\": \"<string>\",\n        \"distance_type\": \"<string>\",\n        \"distance\": \"<string>\"\n      }\n    }\n  },\n  \"aggs\": {\n    \"key_0\": {\n      \"terms\": {\n        \"field\": \"<string>\",\n        \"size\": \"<integer>\"\n      },\n      \"sort\": [\n        \"<[object Object]>\",\n        \"<[object Object]>\"\n      ],\n      \"composite\": {\n        \"size\": \"<integer>\",\n        \"sources\": [\n          {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"histogram\": {\n        \"field\": \"<string>\",\n        \"interval\": \"<integer>\",\n        \"offset\": \"<integer>\",\n        \"keyed\": \"<boolean>\"\n      }\n    },\n    \"key_1\": {\n      \"terms\": {\n        \"field\": \"<string>\",\n        \"size\": \"<integer>\"\n      },\n      \"sort\": [\n        \"<[object Object]>\",\n        \"<[object Object]>\"\n      ],\n      \"composite\": {\n        \"size\": \"<integer>\",\n        \"sources\": [\n          {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"histogram\": {\n        \"field\": \"<string>\",\n        \"interval\": \"<integer>\",\n        \"offset\": \"<integer>\",\n        \"keyed\": \"<boolean>\"\n      }\n    },\n    \"key_2\": {\n      \"terms\": {\n        \"field\": \"<string>\",\n        \"size\": \"<integer>\"\n      },\n      \"sort\": [\n        \"<[object Object]>\",\n        \"<[object Object]>\"\n      ],\n      \"composite\": {\n        \"size\": \"<integer>\",\n        \"sources\": [\n          {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"histogram\": {\n        \"field\": \"<string>\",\n        \"interval\": \"<integer>\",\n        \"offset\": \"<integer>\",\n        \"keyed\": \"<boolean>\"\n      }\n    },\n    \"key_3\": {\n      \"terms\": {\n        \"field\": \"<string>\",\n        \"size\": \"<integer>\"\n      },\n      \"sort\": [\n        \"<[object Object]>\",\n        \"<[object Object]>\"\n      ],\n      \"composite\": {\n        \"size\": \"<integer>\",\n        \"sources\": [\n          {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"histogram\": {\n        \"field\": \"<string>\",\n        \"interval\": \"<integer>\",\n        \"offset\": \"<integer>\",\n        \"keyed\": \"<boolean>\"\n      }\n    }\n  },\n  \"expressions\": {\n    \"key_0\": \"<string>\"\n  },\n  \"max_matches\": \"<integer>\",\n  \"offset\": \"<integer>\",\n  \"options\": \"<object>\",\n  \"profile\": \"<boolean>\",\n  \"sort\": \"<[object Object]>\",\n  \"_source\": \"<[object Object]>\",\n  \"track_scores\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0dec2e5c-c462-42a4-8e65-fed7355c6174",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"'request=SearchRequest(table=\\\"test\\\",query=Query(query_string=\\\"abc\\\"))'\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 3117,\n  \"timed_out\": true,\n  \"aggregations\": {\n    \"key_0\": 8502\n  },\n  \"hits\": {\n    \"total\": 2,\n    \"hits\": [\n      {\n        \"_id\": 1,\n        \"_score\": 1,\n        \"_source\": {\n          \"gid\": 11\n        }\n      },\n      {\n        \"_id\": 2,\n        \"_score\": 1,\n        \"_source\": {\n          \"gid\": 20\n        }\n      }\n    ]\n  },\n  \"profile\": {},\n  \"scroll\": \"string\",\n  \"warning\": {\n    \"key_0\": 3243.764138223443\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7342bc31-fb9a-438c-bfe3-fa05539aed05",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"'request=SearchRequest(table=\\\"test\\\",query=Query(query_string=\\\"abc\\\"))'\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba4cd810-cf5a-496b-9703-938d312878c2",
+          "name": "Performs an autocomplete search on a table",
+          "request": {
+            "name": "Performs an autocomplete search on a table",
+            "description": {
+              "content": "\nThe method expects an object with the following mandatory properties:\n* the name of the table to search\n* the query string to autocomplete\nFor details, see the documentation on [**Autocomplete**](Autocomplete.md)\nAn example: ``` {\n  \"table\":\"table_name\",\n  \"query\":\"query_beginning\"\n}         ```\nAn example of the method's response:\n\n ```\n [\n   {\n     \"total\": 3,\n     \"error\": \"\",\n     \"warning\": \"\",\n     \"columns\": [\n       {\n         \"query\": {\n           \"type\": \"string\"\n         }\n       }\n     ],\n     \"data\": [\n       {\n         \"query\": \"hello\"\n       },\n       {\n         \"query\": \"helio\"\n       },\n       {\n         \"query\": \"hell\"\n       }\n     ]\n   }\n ] \n ```\n\nFor more detailed information about the autocomplete queries, please refer to the documentation [here](https://manual.manticoresearch.com/Searching/Autocomplete).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "autocomplete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table\": \"<string>\",\n  \"query\": \"<string>\",\n  \"options\": {\n    \"key_0\": 8103\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3a9afb96-7443-4058-b705-48880eca3918",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "autocomplete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"'request=AutocompleteRequest(table=\\\"test\\\",query=\\\"abc\\\")'\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f49c4766-0d49-4e0e-99b1-0fe80b45f1d6",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "autocomplete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"'request=AutocompleteRequest(table=\\\"test\\\",query=\\\"abc\\\")'\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25a2d3d8-2330-4b26-a8e5-e8029f23bedc",
+          "name": "Perform reverse search on a percolate table",
+          "request": {
+            "name": "Perform reverse search on a percolate table",
+            "description": {
+              "content": "Performs a percolate search.\nThis method must be used only on percolate tables.\nExpects two parameters: the table name and an object with array of documents to be tested.\nAn example of the documents object: ```\n  {\n    \"query\" {\n      \"percolate\": {\n        \"document\": {\n          \"content\":\"sample content\"\n        }\n      }\n    }\n  }\n```\nResponds with an object with matched stored queries:  ```\n  {\n    'timed_out':false,\n    'hits': {\n      'total':2,\n      'max_score':1,\n      'hits': [\n        {\n          'table':'idx_pq_1',\n          '_type':'doc',\n          '_id':'2',\n          '_score':'1',\n          '_source': {\n            'query': {\n              'match':{'title':'some'}\n            }\n          }\n        },\n        {\n          'table':'idx_pq_1',\n          '_type':'doc',\n          '_id':'5',\n          '_score':'1',\n          '_source': {\n            'query': {\n              'ql':'some | none'\n            }\n          }\n        }\n      ]\n    }\n  }\n```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pq",
+                ":table",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table",
+                  "description": "(Required) Name of the percolate table"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": {\n    \"percolate\": \"<object>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "38c8ff11-d2a9-46d2-9e26-d07584f70967",
+              "name": "items found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pq",
+                    ":table",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table",
+                      "description": "(Required) Name of the percolate table"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": {\n    \"percolate\": {\n      \"document\": {\n        \"title\": \"some text to match\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 3117,\n  \"timed_out\": true,\n  \"aggregations\": {\n    \"key_0\": 8502\n  },\n  \"hits\": {\n    \"total\": 2,\n    \"hits\": [\n      {\n        \"_id\": 1,\n        \"_score\": 1,\n        \"_source\": {\n          \"gid\": 11\n        }\n      },\n      {\n        \"_id\": 2,\n        \"_score\": 1,\n        \"_source\": {\n          \"gid\": 20\n        }\n      }\n    ]\n  },\n  \"profile\": {},\n  \"scroll\": \"string\",\n  \"warning\": {\n    \"key_0\": 3243.764138223443\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "637fbb41-223c-45c8-b6f9-bb715b69933d",
+              "name": "error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pq",
+                    ":table",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table",
+                      "description": "(Required) Name of the percolate table"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": {\n    \"percolate\": {\n      \"document\": {\n        \"title\": \"some text to match\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"reason\": \"string\",\n    \"table\": \"string\"\n  },\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://127.0.0.1:9308/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5c1c12ef-1b50-4365-8999-9391c557aecc",
+    "name": "Manticore Client Index Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Сlient for Manticore Search.\n\n\nContact Support:\n Name: Manticore Software Ltd.\n Email: info@manticoresearch.com",
+      "type": "text/plain"
+    }
+  }
+}
