@@ -23,6 +23,13 @@ tags:
   - Full-Text Search
   - Vector Search
   - Elasticsearch Compatible
+  - Open-Source
+  - Database
+tags_raw:
+  - Search
+  - Full-Text Search
+  - Vector Search
+  - Elasticsearch Compatible
   - Open Source
   - Database
 
@@ -57,6 +64,8 @@ apis:
   humanURL: https://manual.manticoresearch.com/Openapi
   baseURL: http://127.0.0.1:9308/
   tags:
+  - Utils
+  tags_raw:
   - utils
   properties:
   - type: OpenAPI
