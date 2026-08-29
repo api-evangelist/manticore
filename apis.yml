@@ -1,6 +1,18 @@
 aid: manticore
 name: Manticore Search
 description: Open-source search engine with a REST API compatible with Elasticsearch and MySQL protocols for full-text search, filtering, aggregations, and AI vector search. Manticore Search is a high-performance alternative to Elasticsearch, offering up to 2.83x faster big data search and 10.09x faster log analytics, running efficiently on minimal resources.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
