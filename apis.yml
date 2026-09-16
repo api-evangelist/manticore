@@ -1,6 +1,9 @@
 aid: manticore
 name: Manticore Search
-description: Open-source search engine with a REST API compatible with Elasticsearch and MySQL protocols for full-text search, filtering, aggregations, and AI vector search. Manticore Search is a high-performance alternative to Elasticsearch, offering up to 2.83x faster big data search and 10.09x faster log analytics, running efficiently on minimal resources.
+description: Open-source search engine with a REST API compatible with Elasticsearch and MySQL protocols
+  for full-text search, filtering, aggregations, and AI vector search. Manticore Search is a high-performance
+  alternative to Elasticsearch, offering up to 2.83x faster big data search and 10.09x faster log analytics,
+  running efficiently on minimal resources.
 deliveryModel:
   model: saas
   open_source: false
@@ -27,24 +30,23 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/manticore.png
 url: https://raw.githubusercontent.com/api-evangelist/manticore/refs/heads/main/apis.yml
-created: "2026-06-13"
-modified: "2026-06-13"
+created: '2026-06-13'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 tags:
-  - Search
-  - Full-Text Search
-  - Vector Search
-  - Elasticsearch Compatible
-  - Open-Source
-  - Database
+- Search
+- Full-Text Search
+- Vector Search
+- Elasticsearch Compatible
+- Open-Source
+- Database
 tags_raw:
-  - Search
-  - Full-Text Search
-  - Vector Search
-  - Elasticsearch Compatible
-  - Open Source
-  - Database
-
+- Search
+- Full-Text Search
+- Vector Search
+- Elasticsearch Compatible
+- Open Source
+- Database
 apis:
 - aid: manticore:manticore-index-api
   name: Manticore Search Index API
@@ -59,7 +61,7 @@ apis:
   - type: Documentation
     url: https://manual.manticoresearch.com/
 - aid: manticore:manticore-search-api
-  name: Manticore Search Search API
+  name: Manticore Search API
   description: Operations about performing searches over tables
   humanURL: https://manual.manticoresearch.com/Openapi
   baseURL: http://127.0.0.1:9308/
@@ -85,31 +87,30 @@ apis:
   - type: Documentation
     url: https://manual.manticoresearch.com/
 common:
-  - type: AgenticAccess
-    url: agentic-access/manticore-agentic-access.yml
-  - type: DomainSecurity
-    url: security/manticore-domain-security.yml
-  - type: Website
-    url: https://manticoresearch.com/
-  - type: Documentation
-    url: https://manual.manticoresearch.com/
-  - type: GitHubOrg
-    url: https://github.com/manticoresoftware
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/manticore-software
-  - type: Blog
-    url: https://manticoresearch.com/blog/
-  - type: Pricing
-    url: https://manticoresearch.com/services/
-  - type: X
-    url: https://twitter.com/manticoresearch
-  - type: Plans
-    url: plans/manticore-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/manticore-rate-limits.yml
-  - type: FinOps
-    url: finops/manticore-finops.yml
-
+- type: AgenticAccess
+  url: agentic-access/manticore-agentic-access.yml
+- type: DomainSecurity
+  url: security/manticore-domain-security.yml
+- type: Website
+  url: https://manticoresearch.com/
+- type: Documentation
+  url: https://manual.manticoresearch.com/
+- type: GitHubOrg
+  url: https://github.com/manticoresoftware
+- type: LinkedIn
+  url: https://www.linkedin.com/company/manticore-software
+- type: Blog
+  url: https://manticoresearch.com/blog/
+- type: Pricing
+  url: https://manticoresearch.com/services/
+- type: X
+  url: https://twitter.com/manticoresearch
+- type: Plans
+  url: plans/manticore-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/manticore-rate-limits.yml
+- type: FinOps
+  url: finops/manticore-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
