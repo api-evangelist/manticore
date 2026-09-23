@@ -1,9 +1,7 @@
 {
   "provider": "manticore",
   "sources": [
-    "manticore-index-api-openapi.yml",
-    "manticore-search-api-openapi.yml",
-    "manticore-utils-api-openapi.yml"
+    "_original/manticore-openapi.json"
   ],
   "outputs": [
     "manticore-index-api-openapi.yml",
@@ -13,6 +11,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "manticore-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "manticore-openapi.json: declared missing tag: utils",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/manticore-openapi.yaml: archived document superseded by a larger archived document",
+    "manticore-index-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "manticore-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "manticore-utils-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

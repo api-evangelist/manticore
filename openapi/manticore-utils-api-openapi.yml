@@ -1,9 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Manticore Search Client Index utils API
-  description: 'Сlient for Manticore Search.
-
-    '
+  title: Manticore Search Client Utils API
+  description: Сlient for Manticore Search.
   version: 5.0.0
   contact:
     name: Manticore Software Ltd.
@@ -16,7 +14,7 @@ servers:
 - description: Default Manticore Search HTTP
   url: http://127.0.0.1:9308/
 tags:
-- name: utils
+- name: Utils
 paths:
   /sql:
     post:
@@ -30,12 +28,10 @@ paths:
 
         The query string must stay as it is, no URL encoding is needed.
 
-        The response object depends on the query executed. In select mode the response has same format as `/search` operation.
-
-        '
+        The response object depends on the query executed. In select mode the response has same format as `/search` operation.'
       operationId: sql
       tags:
-      - utils
+      - Utils
       externalDocs:
         url: https://manual.manticoresearch.com/Connecting_to_the_server/HTTP#sql-api
       requestBody:
@@ -79,33 +75,6 @@ components:
     responseErrorText:
       type: string
       description: Error message text returned in case of an error
-    responseErrorDetails:
-      type: object
-      description: Detailed error information returned in case of an error response
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          description: Type or category of the error
-        reason:
-          type:
-          - string
-          - 'null'
-          description: Detailed explanation of why the error occurred
-        table:
-          type:
-          - string
-          - 'null'
-          description: The table related to the error, if applicable
-    responseError:
-      oneOf:
-      - $ref: '#/components/schemas/responseErrorDetails'
-      - $ref: '#/components/schemas/responseErrorText'
-    sqlRawResponse:
-      type: array
-      items:
-        type: object
     sqlObjResponse:
       type: object
       required:
@@ -132,6 +101,10 @@ components:
       example:
         status: 500
         error: an error occured
+    sqlRawResponse:
+      type: array
+      items:
+        type: object
     sqlResponse:
       oneOf:
       - $ref: '#/components/schemas/sqlRawResponse'
@@ -140,6 +113,29 @@ components:
       example:
       - total: 0
         error: null
+    responseError:
+      oneOf:
+      - $ref: '#/components/schemas/responseErrorDetails'
+      - $ref: '#/components/schemas/responseErrorText'
+    responseErrorDetails:
+      type: object
+      description: Detailed error information returned in case of an error response
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: Type or category of the error
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Detailed explanation of why the error occurred
+        table:
+          type:
+          - string
+          - 'null'
+          description: The table related to the error, if applicable
 externalDocs:
   description: Find out more about Manticore Search
   url: https://manticoresearch.com/

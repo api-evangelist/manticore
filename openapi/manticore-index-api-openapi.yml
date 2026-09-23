@@ -1,9 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Manticore Search Client Index API
-  description: 'Сlient for Manticore Search.
-
-    '
+  description: Сlient for Manticore Search.
   version: 5.0.0
   contact:
     name: Manticore Software Ltd.
@@ -22,7 +20,61 @@ paths:
   /bulk:
     post:
       summary: Bulk table operations
-      description: "Sends multiple operatons like inserts, updates, replaces or deletes. \nFor each operation it's object must have same format as in their dedicated method. \nThe method expects a raw string as the batch in NDJSON.\n Each operation object needs to be serialized to \n JSON and separated by endline (\\n). \n \n  An example of raw input:\n  \n  ```\n  {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}\n  \\n\n  {\"delete\": {\"table\": \"movies\",\"id\":700}}\n  ```\n  \n  Responds with an object telling whenever any errors occured and an array with status for each operation:\n  \n  ```\n  {\n    'items':\n    [\n      {\n        'update':{'table':'products','id':1,'result':'updated'}\n      },\n      {\n        'update':{'table':'products','id':2,'result':'updated'}\n      }\n    ],\n    'errors':false\n  }\n  ```\n"
+      description: 'Sends multiple operatons like inserts, updates, replaces or deletes.
+
+        For each operation it''s object must have same format as in their dedicated method.
+
+        The method expects a raw string as the batch in NDJSON.
+
+        Each operation object needs to be serialized to
+
+        JSON and separated by endline (\n).
+
+
+        An example of raw input:
+
+
+        ```
+
+        {"insert": {"table": "movies", "doc": {"plot": "A secret team goes to North Pole", "rating": 9.5, "language": [2, 3], "title": "This is an older movie", "lon": 51.99, "meta": {"keywords":["travel","ice"],"genre":["adventure"]}, "year": 1950, "lat": 60.4, "advise": "PG-13"}}}
+
+        \n
+
+        {"delete": {"table": "movies","id":700}}
+
+        ```
+
+
+        Responds with an object telling whenever any errors occured and an array with status for each operation:
+
+
+        ```
+
+        {
+
+        ''items'':
+
+        [
+
+        {
+
+        ''update'':{''table'':''products'',''id'':1,''result'':''updated''}
+
+        },
+
+        {
+
+        ''update'':{''table'':''products'',''id'':2,''result'':''updated''}
+
+        }
+
+        ],
+
+        ''errors'':false
+
+        }
+
+        ```'
       operationId: bulk
       tags:
       - Index
@@ -51,7 +103,64 @@ paths:
     post:
       summary: Delete a document in a table
       operationId: delete
-      description: "Delete one or several documents.\nThe method has 2 ways of deleting: either by id, in case only one document is deleted or by using a  match query, in which case multiple documents can be delete .\nExample of input to delete by id:\n\n  ```\n  {'table':'movies','id':100}\n  ```\n\nExample of input to delete using a query:\n\n  ```\n  {\n    'table':'movies',\n    'query':\n    {\n      'bool':\n      {\n        'must':\n        [\n          {'query_string':'new movie'}\n        ]\n      }\n    }\n  }\n  ```\n\nThe match query has same syntax as in for searching.\nResponds with an object telling how many documents got deleted: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n"
+      description: 'Delete one or several documents.
+
+        The method has 2 ways of deleting: either by id, in case only one document is deleted or by using a match query, in which case multiple documents can be delete .
+
+        Example of input to delete by id:
+
+
+        ```
+
+        {''table'':''movies'',''id'':100}
+
+        ```
+
+
+        Example of input to delete using a query:
+
+
+        ```
+
+        {
+
+        ''table'':''movies'',
+
+        ''query'':
+
+        {
+
+        ''bool'':
+
+        {
+
+        ''must'':
+
+        [
+
+        {''query_string'':''new movie''}
+
+        ]
+
+        }
+
+        }
+
+        }
+
+        ```
+
+
+        The match query has same syntax as in for searching.
+
+        Responds with an object telling how many documents got deleted:
+
+
+        ```
+
+        {''table'':''products'',''updated'':1}
+
+        ```'
       tags:
       - Index
       externalDocs:
@@ -86,7 +195,94 @@ paths:
       x-is_indexapi: true
       x-is_insert: true
       operationId: insert
-      description: "Insert a document. \nExpects an object like:\n \n  ```\n  {\n    'table':'movies',\n    'id':701,\n    'doc':\n    {\n      'title':'This is an old movie',\n      'plot':'A secret team goes to North Pole',\n      'year':1950,\n      'rating':9.5,\n      'lat':60.4,\n      'lon':51.99,\n      'advise':'PG-13',\n      'meta':'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}',\n      'language':[2,3]\n    }\n  }\n  ```\n \nThe document id can also be missing, in which case an autogenerated one will be used:\n         \n  ```\n  {\n    'table':'movies',\n    'doc':\n    {\n      'title':'This is a new movie',\n      'plot':'A secret team goes to North Pole',\n      'year':2020,\n      'rating':9.5,\n      'lat':60.4,\n      'lon':51.99,\n      'advise':'PG-13',\n      'meta':'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}',\n      'language':[2,3]\n    }\n  }\n  ```\n \nIt responds with an object in format:\n  \n  ```\n  {'table':'products','id':701,'created':true,'result':'created','status':201}\n  ```\n"
+      description: 'Insert a document.
+
+        Expects an object like:
+
+
+        ```
+
+        {
+
+        ''table'':''movies'',
+
+        ''id'':701,
+
+        ''doc'':
+
+        {
+
+        ''title'':''This is an old movie'',
+
+        ''plot'':''A secret team goes to North Pole'',
+
+        ''year'':1950,
+
+        ''rating'':9.5,
+
+        ''lat'':60.4,
+
+        ''lon'':51.99,
+
+        ''advise'':''PG-13'',
+
+        ''meta'':''{"keywords":{"travel","ice"},"genre":{"adventure"}}'',
+
+        ''language'':[2,3]
+
+        }
+
+        }
+
+        ```
+
+
+        The document id can also be missing, in which case an autogenerated one will be used:
+
+
+        ```
+
+        {
+
+        ''table'':''movies'',
+
+        ''doc'':
+
+        {
+
+        ''title'':''This is a new movie'',
+
+        ''plot'':''A secret team goes to North Pole'',
+
+        ''year'':2020,
+
+        ''rating'':9.5,
+
+        ''lat'':60.4,
+
+        ''lon'':51.99,
+
+        ''advise'':''PG-13'',
+
+        ''meta'':''{"keywords":{"travel","ice"},"genre":{"adventure"}}'',
+
+        ''language'':[2,3]
+
+        }
+
+        }
+
+        ```
+
+
+        It responds with an object in format:
+
+
+        ```
+
+        {''table'':''products'',''id'':701,''created'':true,''result'':''created'',''status'':201}
+
+        ```'
       tags:
       - Index
       externalDocs:
@@ -122,7 +318,16 @@ paths:
       x-is_indexapi: true
       x-is_replace: true
       operationId: replace
-      description: "Replace an existing document. Input has same format as `insert` operation.\nResponds with an object in format:\n\n  ```\n  {'table':'products','id':1,'created':false,'result':'updated','status':200}\n  ```\n"
+      description: 'Replace an existing document. Input has same format as `insert` operation.
+
+        Responds with an object in format:
+
+
+        ```
+
+        {''table'':''products'',''id'':1,''created'':false,''result'':''updated'',''status'':200}
+
+        ```'
       tags:
       - Index
       externalDocs:
@@ -159,7 +364,64 @@ paths:
       x-is_update: true
       x-is_modify: true
       operationId: update
-      description: "Update one or several documents.\nThe update can be made by passing the id or by using a match query in case multiple documents can be updated.  For example update a document using document id:\n\n  ```\n  {'table':'movies','doc':{'rating':9.49},'id':100}\n  ```\n\nAnd update by using a match query:\n\n  ```\n  {\n    'table':'movies',\n    'doc':{'rating':9.49},\n    'query':\n    {\n      'bool':\n      {\n        'must':\n        [\n          {'query_string':'new movie'}\n        ]\n      }\n    }\n  }\n  ``` \n\nThe match query has same syntax as for searching.\nResponds with an object that tells how many documents where updated in format: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n"
+      description: 'Update one or several documents.
+
+        The update can be made by passing the id or by using a match query in case multiple documents can be updated. For example update a document using document id:
+
+
+        ```
+
+        {''table'':''movies'',''doc'':{''rating'':9.49},''id'':100}
+
+        ```
+
+
+        And update by using a match query:
+
+
+        ```
+
+        {
+
+        ''table'':''movies'',
+
+        ''doc'':{''rating'':9.49},
+
+        ''query'':
+
+        {
+
+        ''bool'':
+
+        {
+
+        ''must'':
+
+        [
+
+        {''query_string'':''new movie''}
+
+        ]
+
+        }
+
+        }
+
+        }
+
+        ```
+
+
+        The match query has same syntax as for searching.
+
+        Responds with an object that tells how many documents where updated in format:
+
+
+        ```
+
+        {''table'':''products'',''updated'':1}
+
+        ```'
       tags:
       - Index
       externalDocs:
@@ -194,7 +456,16 @@ paths:
     post:
       summary: Partially replaces a document in a table
       operationId: partial_replace
-      description: "Partially replaces a document with given id in a table\nResponds with an object of the following format: \n\n  ```\n  {'table':'products','updated':1}\n  ```\n"
+      description: 'Partially replaces a document with given id in a table
+
+        Responds with an object of the following format:
+
+
+        ```
+
+        {''table'':''products'',''updated'':1}
+
+        ```'
       tags:
       - Index
       externalDocs:
@@ -237,106 +508,26 @@ paths:
                 $ref: '#/components/schemas/errorResponse'
 components:
   schemas:
-    boolFilter:
-      type: object
-      properties:
-        must:
-          type: array
-          items:
-            $ref: '#/components/schemas/queryFilter'
-          description: Query clauses that must match for the document to be included
-        must_not:
-          type: array
-          items:
-            $ref: '#/components/schemas/queryFilterAlias1'
-          description: Query clauses that must not match for the document to be included
-        should:
-          type: array
-          items:
-            $ref: '#/components/schemas/queryFilterAlias2'
-          description: Query clauses that should be matched, but are not required
-      additionalProperties: false
-    updateDocumentRequest:
-      type: object
-      description: Payload for updating a document or multiple documents in a table
-      required:
-      - table
-      - doc
-      properties:
-        table:
-          type: string
-          description: Name of the document table
-        cluster:
-          type: string
-          description: Name of the document cluster
-        doc:
-          type: object
-          description: Object containing the document fields to update
-          additionalProperties: true
-          example:
-            gid: 10
-        id:
-          type: integer
-          format: uint64
-          description: Document ID
-        query:
-          oneOf:
-          - type: null
-          - $ref: '#/components/schemas/queryFilter'
-          description: Object defining conditions to perform the updates
-          example:
-            query:
-              match:
-                title: match me
-    bulkResponse:
-      type: object
-      description: Success response for bulk search requests
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-          description: List of results
-        errors:
-          type: boolean
-          description: Errors occurred during the bulk operation
-        error:
-          type: string
-          description: Error message describing an error if such occurred
-        current_line:
-          type: integer
-          description: Number of the row returned in the response
-        skipped_lines:
-          type: integer
-          description: Number of rows skipped in the response
-    queryFilterAlias2:
-      $ref: '#/components/schemas/queryFilter'
     responseErrorText:
       type: string
       description: Error message text returned in case of an error
-    responseErrorDetails:
+    fulltextFilter:
       type: object
-      description: Detailed error information returned in case of an error response
-      required:
-      - type
       properties:
-        type:
+        query_string:
           type: string
-          description: Type or category of the error
-        reason:
-          type:
-          - string
-          - 'null'
-          description: Detailed explanation of why the error occurred
-        table:
-          type:
-          - string
-          - 'null'
-          description: The table related to the error, if applicable
-    responseError:
-      oneOf:
-      - $ref: '#/components/schemas/responseErrorDetails'
-      - $ref: '#/components/schemas/responseErrorText'
+          description: Filter object defining a query string
+        match:
+          type: object
+          description: Filter object defining a match keyword passed as a string or in a Match object
+        match_phrase:
+          type: object
+          description: Filter object defining a match phrase
+        match_all:
+          type: object
+          description: Filter object to select all documents
+      additionalProperties: false
+      description: Defines a type of filter for full-text search queries
     insertDocumentRequest:
       type: object
       description: 'Object containing data for inserting a new document into the table
@@ -369,129 +560,25 @@ components:
         doc:
           title: This is some title
           gid: 100
-    deleteDocumentRequest:
-      type: object
-      description: 'Payload for delete request.
-
-        Documents can be deleted either one by one by specifying the document id or by providing a query object.
-
-        For more information see  [Delete API](https://manual.manticoresearch.com/Deleting_documents)
-
-        '
-      required:
-      - table
-      properties:
-        table:
-          type: string
-          description: Table name
-        cluster:
-          type: string
-          description: Cluster name
-        id:
-          type: integer
-          format: uint64
-          description: The ID of document for deletion
-        query:
-          type: object
-          description: Defines the criteria to match documents for deletion
-      example:
-        table: test
-        id: 1
-    queryFilter:
-      allOf:
-      - $ref: '#/components/schemas/fulltextFilter'
-      - type: object
-        properties:
-          bool:
-            $ref: '#/components/schemas/boolFilter'
-          equals:
-            type: {}
-            description: Filter to match exact attribute values.
-          in:
-            type: object
-            description: Filter to match a given set of attribute values.
-          range:
-            type: object
-            description: Filter to match a given range of attribute values passed in Range objects
-          geo_distance:
-            $ref: '#/components/schemas/geoDistance'
-        additionalProperties: false
-      description: Object used to apply various conditions, such as full-text matching or attribute filtering, to a search query
-    fulltextFilter:
+    boolFilter:
       type: object
       properties:
-        query_string:
-          type: string
-          description: Filter object defining a query string
-        match:
-          type: object
-          description: Filter object defining a match keyword passed as a string or in a Match object
-        match_phrase:
-          type: object
-          description: Filter object defining a match phrase
-        match_all:
-          type: object
-          description: Filter object to select all documents
+        must:
+          type: array
+          items:
+            $ref: '#/components/schemas/queryFilter'
+          description: Query clauses that must match for the document to be included
+        must_not:
+          type: array
+          items:
+            $ref: '#/components/schemas/queryFilterAlias1'
+          description: Query clauses that must not match for the document to be included
+        should:
+          type: array
+          items:
+            $ref: '#/components/schemas/queryFilterAlias2'
+          description: Query clauses that should be matched, but are not required
       additionalProperties: false
-      description: Defines a type of filter for full-text search queries
-    replaceDocumentRequest:
-      type: object
-      description: Object containing the document data for replacing an existing document in a table.
-      required:
-      - doc
-      properties:
-        doc:
-          type: object
-          additionalProperties: true
-          description: Object containing the new document data to replace the existing one.
-      example:
-        doc:
-          title: This is some title
-          gid: 100
-    errorResponse:
-      type: object
-      description: Error response object containing information about the error and a status code
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/responseError'
-        status:
-          type: integer
-          description: HTTP status code of the error response
-          default: 500
-      example:
-        status: 500
-        error: an error occured
-    successResponse:
-      type: object
-      description: Response object indicating the success of an operation, such as inserting or updating a document
-      properties:
-        table:
-          type: string
-          description: Name of the document table
-        id:
-          type: integer
-          format: uint64
-          description: ID of the document affected by the request operation
-        created:
-          type: boolean
-          description: Indicates whether the document was created as a result of the operation
-        result:
-          type: string
-          description: Result of the operation, typically 'created', 'updated', or 'deleted'
-        found:
-          type: boolean
-          description: Indicates whether the document was found in the table
-        status:
-          type: integer
-          description: HTTP status code representing the result of the operation
-      example:
-        table: test
-        id: 1
-        result: created
-        created: true
-        status: 201
     geoDistance:
       type: object
       properties:
@@ -521,6 +608,38 @@ components:
           description: The distance from the anchor point to filter results by
       additionalProperties: false
       description: Object to perform geo-distance based filtering on queries
+    updateDocumentRequest:
+      type: object
+      description: Payload for updating a document or multiple documents in a table
+      required:
+      - table
+      - doc
+      properties:
+        table:
+          type: string
+          description: Name of the document table
+        cluster:
+          type: string
+          description: Name of the document cluster
+        doc:
+          type: object
+          description: Object containing the document fields to update
+          additionalProperties: true
+          example:
+            gid: 10
+        id:
+          type: integer
+          format: uint64
+          description: Document ID
+        query:
+          oneOf:
+          - type: null
+          - $ref: '#/components/schemas/queryFilter'
+          description: Object defining conditions to perform the updates
+          example:
+            query:
+              match:
+                title: match me
     deleteResponse:
       type: object
       description: Response object for successful delete request
@@ -544,6 +663,41 @@ components:
       example:
         table: test
         deleted: 29
+    queryFilter:
+      allOf:
+      - $ref: '#/components/schemas/fulltextFilter'
+      - type: object
+        properties:
+          bool:
+            $ref: '#/components/schemas/boolFilter'
+          equals:
+            type: {}
+            description: Filter to match exact attribute values.
+          in:
+            type: object
+            description: Filter to match a given set of attribute values.
+          range:
+            type: object
+            description: Filter to match a given range of attribute values passed in Range objects
+          geo_distance:
+            $ref: '#/components/schemas/geoDistance'
+        additionalProperties: false
+      description: Object used to apply various conditions, such as full-text matching or attribute filtering, to a search query
+    errorResponse:
+      type: object
+      description: Error response object containing information about the error and a status code
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/responseError'
+        status:
+          type: integer
+          description: HTTP status code of the error response
+          default: 500
+      example:
+        status: 500
+        error: an error occured
     updateResponse:
       type: object
       description: Success response returned after updating one or more documents
@@ -564,8 +718,125 @@ components:
       example:
         table: test
         updated: 29
+    queryFilterAlias2:
+      $ref: '#/components/schemas/queryFilter'
+    successResponse:
+      type: object
+      description: Response object indicating the success of an operation, such as inserting or updating a document
+      properties:
+        table:
+          type: string
+          description: Name of the document table
+        id:
+          type: integer
+          format: uint64
+          description: ID of the document affected by the request operation
+        created:
+          type: boolean
+          description: Indicates whether the document was created as a result of the operation
+        result:
+          type: string
+          description: Result of the operation, typically 'created', 'updated', or 'deleted'
+        found:
+          type: boolean
+          description: Indicates whether the document was found in the table
+        status:
+          type: integer
+          description: HTTP status code representing the result of the operation
+      example:
+        table: test
+        id: 1
+        result: created
+        created: true
+        status: 201
+    bulkResponse:
+      type: object
+      description: Success response for bulk search requests
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+          description: List of results
+        errors:
+          type: boolean
+          description: Errors occurred during the bulk operation
+        error:
+          type: string
+          description: Error message describing an error if such occurred
+        current_line:
+          type: integer
+          description: Number of the row returned in the response
+        skipped_lines:
+          type: integer
+          description: Number of rows skipped in the response
+    replaceDocumentRequest:
+      type: object
+      description: Object containing the document data for replacing an existing document in a table.
+      required:
+      - doc
+      properties:
+        doc:
+          type: object
+          additionalProperties: true
+          description: Object containing the new document data to replace the existing one.
+      example:
+        doc:
+          title: This is some title
+          gid: 100
+    deleteDocumentRequest:
+      type: object
+      description: 'Payload for delete request.
+
+        Documents can be deleted either one by one by specifying the document id or by providing a query object.
+
+        For more information see  [Delete API](https://manual.manticoresearch.com/Deleting_documents)
+
+        '
+      required:
+      - table
+      properties:
+        table:
+          type: string
+          description: Table name
+        cluster:
+          type: string
+          description: Cluster name
+        id:
+          type: integer
+          format: uint64
+          description: The ID of document for deletion
+        query:
+          type: object
+          description: Defines the criteria to match documents for deletion
+      example:
+        table: test
+        id: 1
+    responseError:
+      oneOf:
+      - $ref: '#/components/schemas/responseErrorDetails'
+      - $ref: '#/components/schemas/responseErrorText'
     queryFilterAlias1:
       $ref: '#/components/schemas/queryFilter'
+    responseErrorDetails:
+      type: object
+      description: Detailed error information returned in case of an error response
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: Type or category of the error
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Detailed explanation of why the error occurred
+        table:
+          type:
+          - string
+          - 'null'
+          description: The table related to the error, if applicable
 externalDocs:
   description: Find out more about Manticore Search
   url: https://manticoresearch.com/
