@@ -38,7 +38,7 @@ tags:
 - Full-Text Search
 - Vector Search
 - Elasticsearch Compatible
-- Open-Source
+- Open Source
 - Database
 tags_raw:
 - Search
@@ -47,6 +47,7 @@ tags_raw:
 - Elasticsearch Compatible
 - Open Source
 - Database
+- Open-Source
 apis:
 - aid: manticore:manticore-index-api
   name: Manticore Search Index API
@@ -73,7 +74,7 @@ apis:
   - type: Documentation
     url: https://manual.manticoresearch.com/
 - aid: manticore:manticore-utils-api
-  name: Manticore Search utils API
+  name: Manticore Search Utils API
   description: The utils API from Manticore Search — 1 operation(s) for utils.
   humanURL: https://manual.manticoresearch.com/Openapi
   baseURL: http://127.0.0.1:9308/

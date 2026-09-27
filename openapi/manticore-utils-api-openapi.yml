@@ -75,6 +75,41 @@ components:
     responseErrorText:
       type: string
       description: Error message text returned in case of an error
+    responseErrorDetails:
+      type: object
+      description: Detailed error information returned in case of an error response
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: Type or category of the error
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Detailed explanation of why the error occurred
+        table:
+          type:
+          - string
+          - 'null'
+          description: The table related to the error, if applicable
+    responseError:
+      oneOf:
+      - $ref: '#/components/schemas/responseErrorDetails'
+      - $ref: '#/components/schemas/responseErrorText'
+    sqlResponse:
+      oneOf:
+      - $ref: '#/components/schemas/sqlRawResponse'
+      - $ref: '#/components/schemas/sqlObjResponse'
+      description: List of responses from executed SQL queries
+      example:
+      - total: 0
+        error: null
+    sqlRawResponse:
+      type: array
+      items:
+        type: object
     sqlObjResponse:
       type: object
       required:
@@ -101,41 +136,6 @@ components:
       example:
         status: 500
         error: an error occured
-    sqlRawResponse:
-      type: array
-      items:
-        type: object
-    sqlResponse:
-      oneOf:
-      - $ref: '#/components/schemas/sqlRawResponse'
-      - $ref: '#/components/schemas/sqlObjResponse'
-      description: List of responses from executed SQL queries
-      example:
-      - total: 0
-        error: null
-    responseError:
-      oneOf:
-      - $ref: '#/components/schemas/responseErrorDetails'
-      - $ref: '#/components/schemas/responseErrorText'
-    responseErrorDetails:
-      type: object
-      description: Detailed error information returned in case of an error response
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          description: Type or category of the error
-        reason:
-          type:
-          - string
-          - 'null'
-          description: Detailed explanation of why the error occurred
-        table:
-          type:
-          - string
-          - 'null'
-          description: The table related to the error, if applicable
 externalDocs:
   description: Find out more about Manticore Search
   url: https://manticoresearch.com/

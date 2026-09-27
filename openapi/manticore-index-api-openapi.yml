@@ -511,6 +511,45 @@ components:
     responseErrorText:
       type: string
       description: Error message text returned in case of an error
+    responseErrorDetails:
+      type: object
+      description: Detailed error information returned in case of an error response
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: Type or category of the error
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Detailed explanation of why the error occurred
+        table:
+          type:
+          - string
+          - 'null'
+          description: The table related to the error, if applicable
+    responseError:
+      oneOf:
+      - $ref: '#/components/schemas/responseErrorDetails'
+      - $ref: '#/components/schemas/responseErrorText'
+    queryFilterAlias1:
+      $ref: '#/components/schemas/queryFilter'
+    replaceDocumentRequest:
+      type: object
+      description: Object containing the document data for replacing an existing document in a table.
+      required:
+      - doc
+      properties:
+        doc:
+          type: object
+          additionalProperties: true
+          description: Object containing the new document data to replace the existing one.
+      example:
+        doc:
+          title: This is some title
+          gid: 100
     fulltextFilter:
       type: object
       properties:
@@ -528,86 +567,47 @@ components:
           description: Filter object to select all documents
       additionalProperties: false
       description: Defines a type of filter for full-text search queries
-    insertDocumentRequest:
+    updateResponse:
       type: object
-      description: 'Object containing data for inserting a new document into the table
-
-        '
-      required:
-      - table
-      - doc
+      description: Success response returned after updating one or more documents
       properties:
         table:
           type: string
-          description: Name of the table to insert the document into
-        cluster:
-          type: string
-          description: Name of the cluster to insert the document into
+          description: Name of the document table
+        updated:
+          type: integer
+          description: Number of documents updated
         id:
           type: integer
           format: uint64
-          description: 'Document ID. If not provided, an ID will be auto-generated
-
-            '
-        doc:
-          type: object
-          additionalProperties: true
-          description: 'Object containing document data
-
-            '
+          description: Document ID
+        result:
+          type: string
+          description: Result of the update operation, typically 'updated'
       example:
         table: test
-        doc:
-          title: This is some title
-          gid: 100
-    boolFilter:
+        updated: 29
+    bulkResponse:
       type: object
+      description: Success response for bulk search requests
       properties:
-        must:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/queryFilter'
-          description: Query clauses that must match for the document to be included
-        must_not:
-          type: array
-          items:
-            $ref: '#/components/schemas/queryFilterAlias1'
-          description: Query clauses that must not match for the document to be included
-        should:
-          type: array
-          items:
-            $ref: '#/components/schemas/queryFilterAlias2'
-          description: Query clauses that should be matched, but are not required
-      additionalProperties: false
-    geoDistance:
-      type: object
-      properties:
-        location_anchor:
-          type: object
-          description: Specifies the location of the pin point used for search
-          properties:
-            lat:
-              type: number
-              description: Latitude of the anchor point
-            lon:
-              type: number
-              description: Longitude of the anchor point
-          additionalProperties: false
-        location_source:
+            type: object
+          description: List of results
+        errors:
+          type: boolean
+          description: Errors occurred during the bulk operation
+        error:
           type: string
-          description: Field name in the document that contains location data
-        distance_type:
-          type: string
-          enum:
-          - adaptive
-          - haversine
-          description: Algorithm used to calculate the distance
-        distance:
-          type: string
-          pattern: /^\.+(km|m|cm|mm|mi|yd|ft|in|NM|nmi|kilometers|meters|centimeters|millimeters|miles|yards|foots|inches|nauticalmiles|)$/
-          description: The distance from the anchor point to filter results by
-      additionalProperties: false
-      description: Object to perform geo-distance based filtering on queries
+          description: Error message describing an error if such occurred
+        current_line:
+          type: integer
+          description: Number of the row returned in the response
+        skipped_lines:
+          type: integer
+          description: Number of rows skipped in the response
     updateDocumentRequest:
       type: object
       description: Payload for updating a document or multiple documents in a table
@@ -663,6 +663,36 @@ components:
       example:
         table: test
         deleted: 29
+    queryFilterAlias2:
+      $ref: '#/components/schemas/queryFilter'
+    deleteDocumentRequest:
+      type: object
+      description: 'Payload for delete request.
+
+        Documents can be deleted either one by one by specifying the document id or by providing a query object.
+
+        For more information see  [Delete API](https://manual.manticoresearch.com/Deleting_documents)
+
+        '
+      required:
+      - table
+      properties:
+        table:
+          type: string
+          description: Table name
+        cluster:
+          type: string
+          description: Cluster name
+        id:
+          type: integer
+          format: uint64
+          description: The ID of document for deletion
+        query:
+          type: object
+          description: Defines the criteria to match documents for deletion
+      example:
+        table: test
+        id: 1
     queryFilter:
       allOf:
       - $ref: '#/components/schemas/fulltextFilter'
@@ -683,43 +713,6 @@ components:
             $ref: '#/components/schemas/geoDistance'
         additionalProperties: false
       description: Object used to apply various conditions, such as full-text matching or attribute filtering, to a search query
-    errorResponse:
-      type: object
-      description: Error response object containing information about the error and a status code
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/responseError'
-        status:
-          type: integer
-          description: HTTP status code of the error response
-          default: 500
-      example:
-        status: 500
-        error: an error occured
-    updateResponse:
-      type: object
-      description: Success response returned after updating one or more documents
-      properties:
-        table:
-          type: string
-          description: Name of the document table
-        updated:
-          type: integer
-          description: Number of documents updated
-        id:
-          type: integer
-          format: uint64
-          description: Document ID
-        result:
-          type: string
-          description: Result of the update operation, typically 'updated'
-      example:
-        table: test
-        updated: 29
-    queryFilterAlias2:
-      $ref: '#/components/schemas/queryFilter'
     successResponse:
       type: object
       description: Response object indicating the success of an operation, such as inserting or updating a document
@@ -749,94 +742,101 @@ components:
         result: created
         created: true
         status: 201
-    bulkResponse:
+    geoDistance:
       type: object
-      description: Success response for bulk search requests
       properties:
-        items:
-          type: array
-          items:
-            type: object
-          description: List of results
-        errors:
-          type: boolean
-          description: Errors occurred during the bulk operation
-        error:
-          type: string
-          description: Error message describing an error if such occurred
-        current_line:
-          type: integer
-          description: Number of the row returned in the response
-        skipped_lines:
-          type: integer
-          description: Number of rows skipped in the response
-    replaceDocumentRequest:
-      type: object
-      description: Object containing the document data for replacing an existing document in a table.
-      required:
-      - doc
-      properties:
-        doc:
+        location_anchor:
           type: object
-          additionalProperties: true
-          description: Object containing the new document data to replace the existing one.
-      example:
-        doc:
-          title: This is some title
-          gid: 100
-    deleteDocumentRequest:
+          description: Specifies the location of the pin point used for search
+          properties:
+            lat:
+              type: number
+              description: Latitude of the anchor point
+            lon:
+              type: number
+              description: Longitude of the anchor point
+          additionalProperties: false
+        location_source:
+          type: string
+          description: Field name in the document that contains location data
+        distance_type:
+          type: string
+          enum:
+          - adaptive
+          - haversine
+          description: Algorithm used to calculate the distance
+        distance:
+          type: string
+          pattern: /^\.+(km|m|cm|mm|mi|yd|ft|in|NM|nmi|kilometers|meters|centimeters|millimeters|miles|yards|foots|inches|nauticalmiles|)$/
+          description: The distance from the anchor point to filter results by
+      additionalProperties: false
+      description: Object to perform geo-distance based filtering on queries
+    insertDocumentRequest:
       type: object
-      description: 'Payload for delete request.
-
-        Documents can be deleted either one by one by specifying the document id or by providing a query object.
-
-        For more information see  [Delete API](https://manual.manticoresearch.com/Deleting_documents)
+      description: 'Object containing data for inserting a new document into the table
 
         '
       required:
       - table
+      - doc
       properties:
         table:
           type: string
-          description: Table name
+          description: Name of the table to insert the document into
         cluster:
           type: string
-          description: Cluster name
+          description: Name of the cluster to insert the document into
         id:
           type: integer
           format: uint64
-          description: The ID of document for deletion
-        query:
+          description: 'Document ID. If not provided, an ID will be auto-generated
+
+            '
+        doc:
           type: object
-          description: Defines the criteria to match documents for deletion
+          additionalProperties: true
+          description: 'Object containing document data
+
+            '
       example:
         table: test
-        id: 1
-    responseError:
-      oneOf:
-      - $ref: '#/components/schemas/responseErrorDetails'
-      - $ref: '#/components/schemas/responseErrorText'
-    queryFilterAlias1:
-      $ref: '#/components/schemas/queryFilter'
-    responseErrorDetails:
+        doc:
+          title: This is some title
+          gid: 100
+    errorResponse:
       type: object
-      description: Detailed error information returned in case of an error response
+      description: Error response object containing information about the error and a status code
       required:
-      - type
+      - error
       properties:
-        type:
-          type: string
-          description: Type or category of the error
-        reason:
-          type:
-          - string
-          - 'null'
-          description: Detailed explanation of why the error occurred
-        table:
-          type:
-          - string
-          - 'null'
-          description: The table related to the error, if applicable
+        error:
+          $ref: '#/components/schemas/responseError'
+        status:
+          type: integer
+          description: HTTP status code of the error response
+          default: 500
+      example:
+        status: 500
+        error: an error occured
+    boolFilter:
+      type: object
+      properties:
+        must:
+          type: array
+          items:
+            $ref: '#/components/schemas/queryFilter'
+          description: Query clauses that must match for the document to be included
+        must_not:
+          type: array
+          items:
+            $ref: '#/components/schemas/queryFilterAlias1'
+          description: Query clauses that must not match for the document to be included
+        should:
+          type: array
+          items:
+            $ref: '#/components/schemas/queryFilterAlias2'
+          description: Query clauses that should be matched, but are not required
+      additionalProperties: false
 externalDocs:
   description: Find out more about Manticore Search
   url: https://manticoresearch.com/
