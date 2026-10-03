@@ -345,6 +345,134 @@ paths:
                 $ref: '#/components/schemas/errorResponse'
 components:
   schemas:
+    searchResponse:
+      type: object
+      description: Response object containing the results of a search request
+      properties:
+        took:
+          type: integer
+          description: Time taken to execute the search
+        timed_out:
+          type: boolean
+          description: Indicates whether the search operation timed out
+        aggregations:
+          type: object
+          additionalProperties: true
+          description: Aggregated search results grouped by the specified criteria
+        hits:
+          type: object
+          properties:
+            max_score:
+              type: integer
+              description: Maximum score among the matched documents
+            total:
+              type: integer
+              description: Total number of matched documents
+            total_relation:
+              type: string
+              description: Indicates whether the total number of hits is accurate or an estimate
+            hits:
+              type: array
+              items:
+                $ref: '#/components/schemas/hitsHits'
+              description: Array of hit objects, each representing a matched document
+          description: Object containing the search hits, which represent the documents that matched the query.
+          example:
+            total: 2
+            hits:
+            - _id: 1
+              _score: 1
+              _source:
+                gid: 11
+            - _id: 2
+              _score: 1
+              _source:
+                gid: 20
+        profile:
+          type: object
+          description: Profile information about the search execution, if profiling is enabled
+        scroll:
+          type: string
+          description: Scroll token to be used fo pagination
+        warning:
+          type: object
+          additionalProperties: true
+          description: Warnings encountered during the search operation
+    geoDistance:
+      type: object
+      properties:
+        location_anchor:
+          type: object
+          description: Specifies the location of the pin point used for search
+          properties:
+            lat:
+              type: number
+              description: Latitude of the anchor point
+            lon:
+              type: number
+              description: Longitude of the anchor point
+          additionalProperties: false
+        location_source:
+          type: string
+          description: Field name in the document that contains location data
+        distance_type:
+          type: string
+          enum:
+          - adaptive
+          - haversine
+          description: Algorithm used to calculate the distance
+        distance:
+          type: string
+          pattern: /^\.+(km|m|cm|mm|mi|yd|ft|in|NM|nmi|kilometers|meters|centimeters|millimeters|miles|yards|foots|inches|nauticalmiles|)$/
+          description: The distance from the anchor point to filter results by
+      additionalProperties: false
+      description: Object to perform geo-distance based filtering on queries
+    percolateRequest:
+      type: object
+      description: Object containing the query for percolating documents against stored queries in a percolate table
+      required:
+      - query
+      properties:
+        query:
+          type: object
+          additionalProperties: true
+          required:
+          - percolate
+          properties:
+            percolate:
+              type: object
+              description: Object representing the document to percolate
+          example:
+            percolate:
+              document:
+                title: some text to match
+    aggTerms:
+      type: object
+      required:
+      - field
+      properties:
+        field:
+          type: string
+          description: Name of attribute to aggregate by
+          example: field1
+        size:
+          type: integer
+          description: Maximum number of buckets in the result
+          example: 1000
+      description: Object containing term fields to aggregate on
+      additionalProperties: false
+    aggCompositeSource:
+      type: object
+      required:
+      - terms
+      properties:
+        terms:
+          $ref: '#/components/schemas/aggCompositeTerm'
+      additionalProperties: false
+      description: Object containing terms used for composite aggregation.
+    responseErrorText:
+      type: string
+      description: Error message text returned in case of an error
     highlight:
       allOf:
       - type: object
@@ -425,452 +553,10 @@ components:
             type: boolean
             description: Defines whether to additionally break snippets by phrase boundary characters
       - $ref: '#/components/schemas/highlightFieldOption'
-    aggCompositeTerm:
-      type: object
-      required:
-      - field
-      properties:
-        field:
-          type: string
-          description: Name of field to operate with
-          example: field1
-      additionalProperties: false
-      description: Object representing a term to be used in composite aggregation.
-    aggCompositeSource:
-      type: object
-      required:
-      - terms
-      properties:
-        terms:
-          $ref: '#/components/schemas/aggCompositeTerm'
-      additionalProperties: false
-      description: Object containing terms used for composite aggregation.
-    join:
-      allOf:
-      - type: object
-        required:
-        - type
-        - 'on'
-        - table
-        properties:
-          type:
-            type: string
-            enum:
-            - inner
-            - left
-            description: Type of the join operation
-          'true':
-            type: array
-            items:
-              $ref: '#/components/schemas/joinOn'
-            description: List of objects defining joined tables
-          query:
-            $ref: '#/components/schemas/fulltextFilter'
-          table:
-            type: string
-            description: Basic table of the join operation
-        additionalProperties: false
-        description: Object representing the join operation between two tables
-    percolateRequest:
-      type: object
-      description: Object containing the query for percolating documents against stored queries in a percolate table
-      required:
-      - query
-      properties:
-        query:
-          type: object
-          additionalProperties: true
-          required:
-          - percolate
-          properties:
-            percolate:
-              type: object
-              description: Object representing the document to percolate
-          example:
-            percolate:
-              document:
-                title: some text to match
-    errorResponse:
-      type: object
-      description: Error response object containing information about the error and a status code
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/responseError'
-        status:
-          type: integer
-          description: HTTP status code of the error response
-          default: 500
-      example:
-        status: 500
-        error: an error occured
-    boolFilter:
-      type: object
-      properties:
-        must:
-          type: array
-          items:
-            $ref: '#/components/schemas/queryFilter'
-          description: Query clauses that must match for the document to be included
-        must_not:
-          type: array
-          items:
-            $ref: '#/components/schemas/queryFilterAlias1'
-          description: Query clauses that must not match for the document to be included
-        should:
-          type: array
-          items:
-            $ref: '#/components/schemas/queryFilterAlias2'
-          description: Query clauses that should be matched, but are not required
-      additionalProperties: false
-    responseErrorDetails:
-      type: object
-      description: Detailed error information returned in case of an error response
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          description: Type or category of the error
-        reason:
-          type:
-          - string
-          - 'null'
-          description: Detailed explanation of why the error occurred
-        table:
-          type:
-          - string
-          - 'null'
-          description: The table related to the error, if applicable
-    joinOn:
-      allOf:
-      - type: object
-        properties:
-          right:
-            $ref: '#/components/schemas/joinCond'
-        additionalProperties: false
-      - type: object
-        properties:
-          left:
-            $ref: '#/components/schemas/joinCond'
-        additionalProperties: false
-      - type: object
-        properties:
-          operator:
-            type: string
-            enum:
-            - eq
-        additionalProperties: false
-        description: Defines joined tables
-    fulltextFilter:
-      type: object
-      properties:
-        query_string:
-          type: string
-          description: Filter object defining a query string
-        match:
-          type: object
-          description: Filter object defining a match keyword passed as a string or in a Match object
-        match_phrase:
-          type: object
-          description: Filter object defining a match phrase
-        match_all:
-          type: object
-          description: Filter object to select all documents
-      additionalProperties: false
-      description: Defines a type of filter for full-text search queries
-    highlightFieldOption:
-      type: object
-      properties:
-        fragment_size:
-          type: integer
-          description: Maximum size of the text fragments in highlighted snippets per field
-        limit:
-          type: integer
-          description: Maximum size of snippets per field
-        limit_snippets:
-          type: integer
-          description: Maximum number of snippets per field
-        limit_words:
-          type: integer
-          description: Maximum number of words per field
-        number_of_fragments:
-          type: integer
-          description: Total number of highlighted fragments per field
-      additionalProperties: false
-      description: Options for controlling the behavior of highlighting on a per-field basis
-    hitsHits:
-      type: object
-      properties:
-        _id:
-          type: integer
-          format: uint64
-          description: The ID of the matched document
-        _score:
-          type: integer
-          description: The score of the matched document
-        _source:
-          type: object
-          description: The source data of the matched document
-        _knn_dist:
-          type: number
-          description: The knn distance of the matched document returned for knn queries
-        highlight:
-          type: object
-          description: The highlighting-related data of the matched document
-        table:
-          type: string
-          description: The table name of the matched document returned for percolate queries
-        '_type:':
-          type: string
-          description: The type of the matched document returned for percolate queries
-        fields:
-          type: object
-          description: The percolate-related fields of the matched document returned for percolate queries
-      additionalProperties: true
-      description: Search hit representing a matched document
-    sqlRawResponse:
-      type: array
-      items:
-        type: object
-    geoDistance:
-      type: object
-      properties:
-        location_anchor:
-          type: object
-          description: Specifies the location of the pin point used for search
-          properties:
-            lat:
-              type: number
-              description: Latitude of the anchor point
-            lon:
-              type: number
-              description: Longitude of the anchor point
-          additionalProperties: false
-        location_source:
-          type: string
-          description: Field name in the document that contains location data
-        distance_type:
-          type: string
-          enum:
-          - adaptive
-          - haversine
-          description: Algorithm used to calculate the distance
-        distance:
-          type: string
-          pattern: /^\.+(km|m|cm|mm|mi|yd|ft|in|NM|nmi|kilometers|meters|centimeters|millimeters|miles|yards|foots|inches|nauticalmiles|)$/
-          description: The distance from the anchor point to filter results by
-      additionalProperties: false
-      description: Object to perform geo-distance based filtering on queries
-    aggComposite:
-      type: object
-      description: Object to perform composite aggregation, i.e., grouping search results by multiple fields
-      properties:
-        size:
-          type: integer
-          description: Maximum number of composite buckets in the result
-          example: 1000
-        sources:
-          type: array
-          items:
-            type: object
-            description: List of objects that contain terms used for composite aggregation.
-            additionalProperties:
-              $ref: '#/components/schemas/aggCompositeSource'
-      additionalProperties: false
-    highlightFields:
-      oneOf:
-      - type: array
-        items:
-          type: string
-      - type: object
-      description: List of fields available for highlighting
-    aggHistogram:
-      additionalProperties: false
-      description: Object to use histograms in aggregation, i.e., grouping search results by histogram values
-      properties:
-        field:
-          description: Field to group by
-          example: field
-          type: string
-        interval:
-          description: Interval of the histogram values
-          example: 10
-          type: integer
-        offset:
-          description: Offset of the histogram values. Default value is 0.
-          example: 1
-          type: integer
-        keyed:
-          description: Flag that defines if a search response will be a dictionary with the bucket keys. Default value is false.
-          example: true
-          type: boolean
-      required:
-      - field
-      - interval
-    autocompleteRequest:
-      type: object
-      description: Object containing the data for performing an autocomplete search.
-      required:
-      - table
-      - query
-      properties:
-        table:
-          type: string
-          description: The table to perform the search on
-        query:
-          type: string
-          description: The beginning of the string to autocomplete
-        options:
-          type: object
-          description: "Autocomplete options\n  - layouts: A comma-separated string of keyboard layout codes to validate and check for spell correction. Available options - us, ru, ua, se, pt, no, it, gr, uk, fr, es, dk, de, ch, br, bg, be. By default, all are enabled.\n  - fuzziness: (0,1 or 2) Maximum Levenshtein distance for finding typos. Set to 0 to disable fuzzy matching. Default is 2\n  - prepend: true/false If true, adds an asterisk before the last word for prefix expansion (e.g., *word )\n  - append:  true/false If true, adds an asterisk after the last word for prefix expansion (e.g., word* )\n  - expansion_len: Number of characters to expand in the last word. Default is 10.\n"
-          additionalProperties: true
-      example:
-        table: test
-        query: Start
-        options:
-          layouts: us,uk
-          fuzziness: 0
-    joinCond:
-      type: object
-      required:
-      - field
-      - table
-      properties:
-        field:
-          type: string
-          description: Field to join on
-        table:
-          type: string
-          description: Joined table
-        query:
-          $ref: '#/components/schemas/fulltextFilter'
-        type:
-          type: {}
-      additionalProperties: false
-      description: Object representing the conditions used to perform the join operation
-    queryFilter:
-      allOf:
-      - $ref: '#/components/schemas/fulltextFilter'
-      - type: object
-        properties:
-          bool:
-            $ref: '#/components/schemas/boolFilter'
-          equals:
-            type: {}
-            description: Filter to match exact attribute values.
-          in:
-            type: object
-            description: Filter to match a given set of attribute values.
-          range:
-            type: object
-            description: Filter to match a given range of attribute values passed in Range objects
-          geo_distance:
-            $ref: '#/components/schemas/geoDistance'
-        additionalProperties: false
-      description: Object used to apply various conditions, such as full-text matching or attribute filtering, to a search query
-    aggTerms:
-      type: object
-      required:
-      - field
-      properties:
-        field:
-          type: string
-          description: Name of attribute to aggregate by
-          example: field1
-        size:
-          type: integer
-          description: Maximum number of buckets in the result
-          example: 1000
-      description: Object containing term fields to aggregate on
-      additionalProperties: false
-    searchResponse:
-      type: object
-      description: Response object containing the results of a search request
-      properties:
-        took:
-          type: integer
-          description: Time taken to execute the search
-        timed_out:
-          type: boolean
-          description: Indicates whether the search operation timed out
-        aggregations:
-          type: object
-          additionalProperties: true
-          description: Aggregated search results grouped by the specified criteria
-        hits:
-          type: object
-          properties:
-            max_score:
-              type: integer
-              description: Maximum score among the matched documents
-            total:
-              type: integer
-              description: Total number of matched documents
-            total_relation:
-              type: string
-              description: Indicates whether the total number of hits is accurate or an estimate
-            hits:
-              type: array
-              items:
-                $ref: '#/components/schemas/hitsHits'
-              description: Array of hit objects, each representing a matched document
-          description: Object containing the search hits, which represent the documents that matched the query.
-          example:
-            total: 2
-            hits:
-            - _id: 1
-              _score: 1
-              _source:
-                gid: 11
-            - _id: 2
-              _score: 1
-              _source:
-                gid: 20
-        profile:
-          type: object
-          description: Profile information about the search execution, if profiling is enabled
-        scroll:
-          type: string
-          description: Scroll token to be used fo pagination
-        warning:
-          type: object
-          additionalProperties: true
-          description: Warnings encountered during the search operation
-    knn:
-      type: object
-      required:
-      - field
-      properties:
-        field:
-          type: string
-          description: Field to perform the k-nearest neighbor search on
-        k:
-          type: integer
-          deprecated: true
-          description: Deprecated. Use the top-level `limit` parameter instead.
-        query:
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              type: number
-        query_vector:
-          type: array
-          items:
-            type: number
-          description: The vector used as input for the KNN search
-        doc_id:
-          type: integer
-          format: uint64
-          description: The docuemnt ID used as input for the KNN search
-        ef:
-          type: integer
-          description: Optional parameter controlling the accuracy of the search
-        filter:
-          $ref: '#/components/schemas/queryFilter'
-      description: Object representing a k-nearest neighbor search query
+    queryFilterAlias2:
+      $ref: '#/components/schemas/queryFilter'
+    queryFilterAlias1:
+      $ref: '#/components/schemas/queryFilter'
     searchRequest:
       description: Request object for search operation
       type: object
@@ -939,25 +625,39 @@ components:
         table: your_table
         query:
           query_string: your_query
-    responseErrorText:
-      type: string
-      description: Error message text returned in case of an error
-    queryFilterAlias1:
-      $ref: '#/components/schemas/queryFilter'
-    responseError:
-      oneOf:
-      - $ref: '#/components/schemas/responseErrorDetails'
-      - $ref: '#/components/schemas/responseErrorText'
-    searchQuery:
-      allOf:
-      - $ref: '#/components/schemas/queryFilter'
-      - type: object
-        properties:
-          highlight:
-            $ref: '#/components/schemas/highlight'
-      description: Defines a query structure for performing search operations
-    queryFilterAlias2:
-      $ref: '#/components/schemas/queryFilter'
+    knn:
+      type: object
+      required:
+      - field
+      properties:
+        field:
+          type: string
+          description: Field to perform the k-nearest neighbor search on
+        k:
+          type: integer
+          deprecated: true
+          description: Deprecated. Use the top-level `limit` parameter instead.
+        query:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: number
+        query_vector:
+          type: array
+          items:
+            type: number
+          description: The vector used as input for the KNN search
+        doc_id:
+          type: integer
+          format: uint64
+          description: The docuemnt ID used as input for the KNN search
+        ef:
+          type: integer
+          description: Optional parameter controlling the accuracy of the search
+        filter:
+          $ref: '#/components/schemas/queryFilter'
+      description: Object representing a k-nearest neighbor search query
     aggregation:
       allOf:
       - type: object
@@ -973,6 +673,306 @@ components:
             $ref: '#/components/schemas/aggComposite'
           histogram:
             $ref: '#/components/schemas/aggHistogram'
+    queryFilter:
+      allOf:
+      - $ref: '#/components/schemas/fulltextFilter'
+      - type: object
+        properties:
+          bool:
+            $ref: '#/components/schemas/boolFilter'
+          equals:
+            type: {}
+            description: Filter to match exact attribute values.
+          in:
+            type: object
+            description: Filter to match a given set of attribute values.
+          range:
+            type: object
+            description: Filter to match a given range of attribute values passed in Range objects
+          geo_distance:
+            $ref: '#/components/schemas/geoDistance'
+        additionalProperties: false
+      description: Object used to apply various conditions, such as full-text matching or attribute filtering, to a search query
+    boolFilter:
+      type: object
+      properties:
+        must:
+          type: array
+          items:
+            $ref: '#/components/schemas/queryFilter'
+          description: Query clauses that must match for the document to be included
+        must_not:
+          type: array
+          items:
+            $ref: '#/components/schemas/queryFilterAlias1'
+          description: Query clauses that must not match for the document to be included
+        should:
+          type: array
+          items:
+            $ref: '#/components/schemas/queryFilterAlias2'
+          description: Query clauses that should be matched, but are not required
+      additionalProperties: false
+    aggCompositeTerm:
+      type: object
+      required:
+      - field
+      properties:
+        field:
+          type: string
+          description: Name of field to operate with
+          example: field1
+      additionalProperties: false
+      description: Object representing a term to be used in composite aggregation.
+    join:
+      allOf:
+      - type: object
+        required:
+        - type
+        - 'on'
+        - table
+        properties:
+          type:
+            type: string
+            enum:
+            - inner
+            - left
+            description: Type of the join operation
+          'true':
+            type: array
+            items:
+              $ref: '#/components/schemas/joinOn'
+            description: List of objects defining joined tables
+          query:
+            $ref: '#/components/schemas/fulltextFilter'
+          table:
+            type: string
+            description: Basic table of the join operation
+        additionalProperties: false
+        description: Object representing the join operation between two tables
+    highlightFieldOption:
+      type: object
+      properties:
+        fragment_size:
+          type: integer
+          description: Maximum size of the text fragments in highlighted snippets per field
+        limit:
+          type: integer
+          description: Maximum size of snippets per field
+        limit_snippets:
+          type: integer
+          description: Maximum number of snippets per field
+        limit_words:
+          type: integer
+          description: Maximum number of words per field
+        number_of_fragments:
+          type: integer
+          description: Total number of highlighted fragments per field
+      additionalProperties: false
+      description: Options for controlling the behavior of highlighting on a per-field basis
+    responseError:
+      oneOf:
+      - $ref: '#/components/schemas/responseErrorDetails'
+      - $ref: '#/components/schemas/responseErrorText'
+    joinCond:
+      type: object
+      required:
+      - field
+      - table
+      properties:
+        field:
+          type: string
+          description: Field to join on
+        table:
+          type: string
+          description: Joined table
+        query:
+          $ref: '#/components/schemas/fulltextFilter'
+        type:
+          type: {}
+      additionalProperties: false
+      description: Object representing the conditions used to perform the join operation
+    sqlRawResponse:
+      type: array
+      items:
+        type: object
+    joinOn:
+      allOf:
+      - type: object
+        properties:
+          right:
+            $ref: '#/components/schemas/joinCond'
+        additionalProperties: false
+      - type: object
+        properties:
+          left:
+            $ref: '#/components/schemas/joinCond'
+        additionalProperties: false
+      - type: object
+        properties:
+          operator:
+            type: string
+            enum:
+            - eq
+        additionalProperties: false
+        description: Defines joined tables
+    searchQuery:
+      allOf:
+      - $ref: '#/components/schemas/queryFilter'
+      - type: object
+        properties:
+          highlight:
+            $ref: '#/components/schemas/highlight'
+      description: Defines a query structure for performing search operations
+    autocompleteRequest:
+      type: object
+      description: Object containing the data for performing an autocomplete search.
+      required:
+      - table
+      - query
+      properties:
+        table:
+          type: string
+          description: The table to perform the search on
+        query:
+          type: string
+          description: The beginning of the string to autocomplete
+        options:
+          type: object
+          description: "Autocomplete options\n  - layouts: A comma-separated string of keyboard layout codes to validate and check for spell correction. Available options - us, ru, ua, se, pt, no, it, gr, uk, fr, es, dk, de, ch, br, bg, be. By default, all are enabled.\n  - fuzziness: (0,1 or 2) Maximum Levenshtein distance for finding typos. Set to 0 to disable fuzzy matching. Default is 2\n  - prepend: true/false If true, adds an asterisk before the last word for prefix expansion (e.g., *word )\n  - append:  true/false If true, adds an asterisk after the last word for prefix expansion (e.g., word* )\n  - expansion_len: Number of characters to expand in the last word. Default is 10.\n"
+          additionalProperties: true
+      example:
+        table: test
+        query: Start
+        options:
+          layouts: us,uk
+          fuzziness: 0
+    highlightFields:
+      oneOf:
+      - type: array
+        items:
+          type: string
+      - type: object
+      description: List of fields available for highlighting
+    hitsHits:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: uint64
+          description: The ID of the matched document
+        _score:
+          type: integer
+          description: The score of the matched document
+        _source:
+          type: object
+          description: The source data of the matched document
+        _knn_dist:
+          type: number
+          description: The knn distance of the matched document returned for knn queries
+        highlight:
+          type: object
+          description: The highlighting-related data of the matched document
+        table:
+          type: string
+          description: The table name of the matched document returned for percolate queries
+        '_type:':
+          type: string
+          description: The type of the matched document returned for percolate queries
+        fields:
+          type: object
+          description: The percolate-related fields of the matched document returned for percolate queries
+      additionalProperties: true
+      description: Search hit representing a matched document
+    fulltextFilter:
+      type: object
+      properties:
+        query_string:
+          type: string
+          description: Filter object defining a query string
+        match:
+          type: object
+          description: Filter object defining a match keyword passed as a string or in a Match object
+        match_phrase:
+          type: object
+          description: Filter object defining a match phrase
+        match_all:
+          type: object
+          description: Filter object to select all documents
+      additionalProperties: false
+      description: Defines a type of filter for full-text search queries
+    aggComposite:
+      type: object
+      description: Object to perform composite aggregation, i.e., grouping search results by multiple fields
+      properties:
+        size:
+          type: integer
+          description: Maximum number of composite buckets in the result
+          example: 1000
+        sources:
+          type: array
+          items:
+            type: object
+            description: List of objects that contain terms used for composite aggregation.
+            additionalProperties:
+              $ref: '#/components/schemas/aggCompositeSource'
+      additionalProperties: false
+    responseErrorDetails:
+      type: object
+      description: Detailed error information returned in case of an error response
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: Type or category of the error
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Detailed explanation of why the error occurred
+        table:
+          type:
+          - string
+          - 'null'
+          description: The table related to the error, if applicable
+    aggHistogram:
+      additionalProperties: false
+      description: Object to use histograms in aggregation, i.e., grouping search results by histogram values
+      properties:
+        field:
+          description: Field to group by
+          example: field
+          type: string
+        interval:
+          description: Interval of the histogram values
+          example: 10
+          type: integer
+        offset:
+          description: Offset of the histogram values. Default value is 0.
+          example: 1
+          type: integer
+        keyed:
+          description: Flag that defines if a search response will be a dictionary with the bucket keys. Default value is false.
+          example: true
+          type: boolean
+      required:
+      - field
+      - interval
+    errorResponse:
+      type: object
+      description: Error response object containing information about the error and a status code
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/responseError'
+        status:
+          type: integer
+          description: HTTP status code of the error response
+          default: 500
+      example:
+        status: 500
+        error: an error occured
 externalDocs:
   description: Find out more about Manticore Search
   url: https://manticoresearch.com/

@@ -72,9 +72,29 @@ paths:
                 $ref: '#/components/schemas/errorResponse'
 components:
   schemas:
-    responseErrorText:
-      type: string
-      description: Error message text returned in case of an error
+    responseError:
+      oneOf:
+      - $ref: '#/components/schemas/responseErrorDetails'
+      - $ref: '#/components/schemas/responseErrorText'
+    sqlObjResponse:
+      type: object
+      required:
+      - hits
+      properties:
+        hits:
+          type: object
+        took:
+          type: number
+        timed_out:
+          type: boolean
+    sqlResponse:
+      oneOf:
+      - $ref: '#/components/schemas/sqlRawResponse'
+      - $ref: '#/components/schemas/sqlObjResponse'
+      description: List of responses from executed SQL queries
+      example:
+      - total: 0
+        error: null
     responseErrorDetails:
       type: object
       description: Detailed error information returned in case of an error response
@@ -94,33 +114,13 @@ components:
           - string
           - 'null'
           description: The table related to the error, if applicable
-    responseError:
-      oneOf:
-      - $ref: '#/components/schemas/responseErrorDetails'
-      - $ref: '#/components/schemas/responseErrorText'
-    sqlResponse:
-      oneOf:
-      - $ref: '#/components/schemas/sqlRawResponse'
-      - $ref: '#/components/schemas/sqlObjResponse'
-      description: List of responses from executed SQL queries
-      example:
-      - total: 0
-        error: null
     sqlRawResponse:
       type: array
       items:
         type: object
-    sqlObjResponse:
-      type: object
-      required:
-      - hits
-      properties:
-        hits:
-          type: object
-        took:
-          type: number
-        timed_out:
-          type: boolean
+    responseErrorText:
+      type: string
+      description: Error message text returned in case of an error
     errorResponse:
       type: object
       description: Error response object containing information about the error and a status code
