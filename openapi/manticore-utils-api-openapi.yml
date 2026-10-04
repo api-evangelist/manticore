@@ -72,21 +72,6 @@ paths:
                 $ref: '#/components/schemas/errorResponse'
 components:
   schemas:
-    responseError:
-      oneOf:
-      - $ref: '#/components/schemas/responseErrorDetails'
-      - $ref: '#/components/schemas/responseErrorText'
-    sqlObjResponse:
-      type: object
-      required:
-      - hits
-      properties:
-        hits:
-          type: object
-        took:
-          type: number
-        timed_out:
-          type: boolean
     sqlResponse:
       oneOf:
       - $ref: '#/components/schemas/sqlRawResponse'
@@ -95,6 +80,10 @@ components:
       example:
       - total: 0
         error: null
+    sqlRawResponse:
+      type: array
+      items:
+        type: object
     responseErrorDetails:
       type: object
       description: Detailed error information returned in case of an error response
@@ -114,13 +103,6 @@ components:
           - string
           - 'null'
           description: The table related to the error, if applicable
-    sqlRawResponse:
-      type: array
-      items:
-        type: object
-    responseErrorText:
-      type: string
-      description: Error message text returned in case of an error
     errorResponse:
       type: object
       description: Error response object containing information about the error and a status code
@@ -136,6 +118,24 @@ components:
       example:
         status: 500
         error: an error occured
+    responseError:
+      oneOf:
+      - $ref: '#/components/schemas/responseErrorDetails'
+      - $ref: '#/components/schemas/responseErrorText'
+    responseErrorText:
+      type: string
+      description: Error message text returned in case of an error
+    sqlObjResponse:
+      type: object
+      required:
+      - hits
+      properties:
+        hits:
+          type: object
+        took:
+          type: number
+        timed_out:
+          type: boolean
 externalDocs:
   description: Find out more about Manticore Search
   url: https://manticoresearch.com/
