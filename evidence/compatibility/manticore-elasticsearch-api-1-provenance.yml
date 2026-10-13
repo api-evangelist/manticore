@@ -1,0 +1,13 @@
+fetched: '2026-10-13'
+method: fetched
+source: https://raw.githubusercontent.com/manticoresoftware/manticoresearch/master/README.md
+page: https://raw.githubusercontent.com/manticoresoftware/manticoresearch/master/README.md
+file: manticore-elasticsearch-api-1.md
+bytes: 17918
+sha256: 1dd5a6088dfe510cc9c67376977a32d9c0a6fcc46a2b0ec96e7a4028c9d114a5
+anchor: elastic
+shape: elasticsearch-api
+classification: declares-compatibility
+quote: '* Manticore also provides a programmatic HTTP JSON protocol for more versatile data and schema management,
+  with Elasticsearch-compatible writes support.'
+note: text extracted from the provider's own page (tags stripped), saved for evidence
