@@ -976,3 +976,9 @@ components:
 externalDocs:
   description: Find out more about Manticore Search
   url: https://manticoresearch.com/
+x-provenance:
+  method: harvested
+  publisher: Manticore Search
+  source: https://raw.githubusercontent.com/manticoresoftware/openapi/master/manticore.yml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
