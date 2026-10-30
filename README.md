@@ -1,4 +1,4 @@
-# Manticore Search (manticore)
+# Manticore Search
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,58 +66,176 @@
 
 Open-source search engine with a REST API compatible with Elasticsearch and MySQL protocols for full-text search, filtering, aggregations, and AI vector search. Manticore Search is a high-performance alternative to Elasticsearch, offering up to 2.83x faster big data search and 10.09x faster log analytics, running efficiently on minimal resources.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/manticore/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/manticore/refs/heads/main/apis.yml)
+**Areas:** Search · Full-Text Search · Vector Search · Elasticsearch Compatible · Open Source · Database
 
-## Tags
+## Manticore Search on APIs.io
 
-- Search
-- Full-Text Search
-- Vector Search
-- Elasticsearch Compatible
-- Open Source
-- Database
+Everything profiled for Manticore Search is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/manticore/](https://apis.io/providers/manticore/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (3)
 
-- **Created:** 2026-06-13
-- **Modified:** 2026-06-13
+- [Manticore Search Index API](https://apis.io/apis/manticore/manticore-index-api/) — Operations regarding adding, updating or deleting documents
+- [Manticore Search API](https://apis.io/apis/manticore/manticore-search-api/) — Operations about performing searches over tables
+- [Manticore Search Utils API](https://apis.io/apis/manticore/manticore-utils-api/) — The utils API from Manticore Search — 1 operation(s) for utils.
 
-## APIs
+### Published properties
 
-### Manticore Search REST API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-RESTful HTTP API for Manticore Search providing full-text search, document indexing, filtering, aggregations, percolate queries, autocomplete, and AI vector search operations. Compatible with Elasticsearch HTTP API conventions.
+#### Agentic access (1)
 
-- **Human URL:** [https://manual.manticoresearch.com/Openapi](https://manual.manticoresearch.com/Openapi)
-- **Base URL:** `http://127.0.0.1:9308/`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Manticore Agentic Access](https://apis.io/agentic-access/manticore/manticore-agentic-access/)
 
-- Search
-- Full-Text Search
-- Vector Search
-- Indexing
-- Aggregations
+#### JSON Schema (45)
 
-#### Properties
+The data models the API reads and writes.
 
-- [Documentation](https://manual.manticoresearch.com/)
-- [OpenAPI](https://raw.githubusercontent.com/manticoresoftware/openapi/master/manticore.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [_match](https://apis.io/schemas/manticore/_match/)
+- [aggComposite](https://apis.io/schemas/manticore/aggComposite/)
+- [aggCompositeSource](https://apis.io/schemas/manticore/aggCompositeSource/)
+- [aggCompositeTerm](https://apis.io/schemas/manticore/aggCompositeTerm/)
+- [aggDateHistogram](https://apis.io/schemas/manticore/aggDateHistogram/)
+- [aggHistogram](https://apis.io/schemas/manticore/aggHistogram/)
+- [aggTerms](https://apis.io/schemas/manticore/aggTerms/)
+- [aggregation](https://apis.io/schemas/manticore/aggregation/)
+- [autocompleteRequest](https://apis.io/schemas/manticore/autocompleteRequest/)
+- [boolFilter](https://apis.io/schemas/manticore/boolFilter/)
+- [bulkResponse](https://apis.io/schemas/manticore/bulkResponse/)
+- [deleteDocumentRequest](https://apis.io/schemas/manticore/deleteDocumentRequest/)
+- [deleteResponse](https://apis.io/schemas/manticore/deleteResponse/)
+- [errorResponse](https://apis.io/schemas/manticore/errorResponse/)
+- [fulltextFilter](https://apis.io/schemas/manticore/fulltextFilter/)
+- [geoDistance](https://apis.io/schemas/manticore/geoDistance/)
+- [highlight](https://apis.io/schemas/manticore/highlight/)
+- [highlightFieldOption](https://apis.io/schemas/manticore/highlightFieldOption/)
+- [highlightFields](https://apis.io/schemas/manticore/highlightFields/)
+- [hitsHits](https://apis.io/schemas/manticore/hitsHits/)
+- [insertDocumentRequest](https://apis.io/schemas/manticore/insertDocumentRequest/)
+- [join](https://apis.io/schemas/manticore/join/)
+- [joinCond](https://apis.io/schemas/manticore/joinCond/)
+- [joinOn](https://apis.io/schemas/manticore/joinOn/)
+- [knn](https://apis.io/schemas/manticore/knn/)
+- …and 20 more published on APIs.io
 
-## Common Properties
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Manticore Context](https://apis.io/jsonld/manticore/manticore/)
+
+#### Examples (10)
+
+Example requests and responses.
+
+- [Autocomplete](https://apis.io/examples/manticore/autocomplete/)
+- [Bulk](https://apis.io/examples/manticore/bulk/)
+- [Delete](https://apis.io/examples/manticore/delete/)
+- [Insert](https://apis.io/examples/manticore/insert/)
+- [Partial_Replace](https://apis.io/examples/manticore/partial_replace/)
+- [Percolate](https://apis.io/examples/manticore/percolate/)
+- [Replace](https://apis.io/examples/manticore/replace/)
+- [Search](https://apis.io/examples/manticore/search/)
+- [Sql](https://apis.io/examples/manticore/sql/)
+- [Update](https://apis.io/examples/manticore/update/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Manticore Search Client Index API](https://apis.io/collections/manticore/open-manticore-index-api/)
+- [Manticore Client Index Search API](https://apis.io/collections/manticore/open-manticore-search-api/)
+- [Manticore Search Client Index utils API](https://apis.io/collections/manticore/open-manticore-utils-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Manticore Search — jsonschema rules](https://apis.io/rules/manticore/manticore-jsonschema-spectral-rules/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Manticore Domain Security](https://apis.io/security/manticore/manticore-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Manticore Plans Pricing](https://apis.io/plans/manticore/manticore-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Manticore Rate Limits](https://apis.io/rate-limits/manticore/manticore-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Manticore Finops](https://apis.io/finops/manticore/manticore-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://manticoresearch.com/)
 - [Documentation](https://manual.manticoresearch.com/)
-- [Git Hub Org](https://github.com/manticoresoftware)
-- [LinkedIn](https://www.linkedin.com/company/manticore-software)
-- [Blog](https://manticoresearch.com/blog/)
 - [Pricing](https://manticoresearch.com/services/)
-- [X (Twitter)](https://twitter.com/manticoresearch)
-- [Plans](plans/manticore-plans-pricing.yml)
-- [Rate Limits](rate-limits/manticore-rate-limits.yml)
-- [Fin Ops](finops/manticore-finops.yml)
+- [Blog](https://manticoresearch.com/blog/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 48.8 |
+| Contract governance | 9.8 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 2.4 |
+| Access clarity | 18.4 |
+
+**Agent readiness 22.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/manticore/](https://apis.io/providers/manticore/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Manticore Search: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/manticore/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
